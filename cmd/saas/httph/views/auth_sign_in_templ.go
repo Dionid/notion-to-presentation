@@ -23,25 +23,25 @@ func SignInPageForm(err string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/auth/sign-in\" hx-swap=\"outerHTML\" class=\"w-full flex flex-col gap-4\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/auth/sign-in\" hx-swap=\"outerHTML\" hx-indicator=\"#sign-in-component\" class=\"w-full flex flex-col gap-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if err != "" {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div v-if=\"error\" role=\"alert\" class=\"alert alert-error mt-5\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"stroke-current shrink-0 h-6 w-6\" fill=\"none\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z\"></path></svg> <span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(err)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `auth_sign_in.templ`, Line: 6, Col: 19}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `auth_sign_in.templ`, Line: 9, Col: 25}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -76,7 +76,7 @@ func SignInPage(err string) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"h-full mx-auto flex max-w-7xl p-6 flex-col justify-center items-center\"><div class=\"flex flex-col w-full max-w-sm\"><h1 class=\"text-2xl font-bold pl-6\">Sign in</h1><div class=\"card card-bordered w-96 bg-base-100 shadow-xl mt-5\"><div class=\"card-body\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"h-full mx-auto flex max-w-7xl p-6 flex-col justify-center items-center\"><div class=\"flex flex-col w-full max-w-sm\"><h1 class=\"text-2xl font-bold pl-6\">Sign in</h1><style>\n                    #sign-in-component.htmx-request #spinner-wrapper {\n                        display: block;\n                    }\n                </style><div id=\"sign-in-component\" class=\"card card-bordered w-96 bg-base-100 shadow-xl mt-5\"><div class=\"card-body\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -84,7 +84,7 @@ func SignInPage(err string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div id=\"spinner-wrapper\" class=\"hidden duration-100\"><div id=\"spinner\" class=\"absolute top-0 left-0 flex w-full h-full items-center justify-center bg-black bg-opacity-30 text-white text-2xl rounded-lg z-10\"><span class=\"loading loading-spinner loading-lg text-primary\"></span></div></div></div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

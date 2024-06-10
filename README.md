@@ -27,8 +27,7 @@ DONE
 
 ## Second phase. Deploy
 
-1. Digital Ocean droplet
-1. Domain
+DONE
 
 ## Third phase. Testing
 
@@ -40,12 +39,14 @@ DONE
 
 ## Fourth phase. Polish
 
+1. Create n2p.dev email
+1. Resend verification email
 1. Add reveal.js to `/app`
 1. Make good demo presentation
-1. Compile JS and CSS
 1. Change icons
 1. Login and password autocomplete
 1. Toast
+1. Compile JS and CSS
 1. ...
 
 ## Fifth phase. Go live
@@ -68,3 +69,4 @@ DONE
     1. Enable WAL mode
 1. Templ
     1. Hot-reload
+1. Embed public

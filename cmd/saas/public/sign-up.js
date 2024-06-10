@@ -6,6 +6,7 @@ window.addEventListener("load", function () {
         email: "",
         password: "",
         error: "",
+        loading: false,
       };
     },
     watch: {
@@ -23,6 +24,8 @@ window.addEventListener("load", function () {
           return;
         }
 
+        this.loading = true;
+
         const data = {
           email: this.email,
           emailVisibility: true,
@@ -37,6 +40,8 @@ window.addEventListener("load", function () {
           },
           body: JSON.stringify(data),
         });
+
+        this.loading = false;
 
         if (!response.ok) {
           const respJson = await response.json();
@@ -63,5 +68,5 @@ window.addEventListener("load", function () {
         }
       },
     },
-  }).mount("#sign-up-form");
+  }).mount("#sign-up-form-component");
 });
