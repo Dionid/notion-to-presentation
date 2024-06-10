@@ -50,7 +50,7 @@ type NotionChunkResponse struct {
 
 func ExtractPageIdFromUrl(parsedUrl *url.URL) string {
 	splittedPath := strings.Split(parsedUrl.Path, "-")
-	originalId := splittedPath[len(splittedPath)-1]
+	originalId := strings.ReplaceAll(splittedPath[len(splittedPath)-1], "/", "")
 	mainPageId := fmt.Sprintf("%s-%s-%s-%s-%s", originalId[0:8], originalId[8:12], originalId[12:16], originalId[16:20], originalId[20:])
 
 	return mainPageId
@@ -64,13 +64,14 @@ func GetNotionBlocks(domain string, mainPageId string) (*NotionChunkResponse, er
 			fmt.Sprintf(`{"page":{"id":"%s"},"limit":100,"cursor":{"stack":[]},"chunkNumber":0,"verticalColumns":false}`, mainPageId),
 		)),
 	)
+
 	if err != nil {
 		return nil, err
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 {
-		return nil, errors.New("status code error")
+		return nil, errors.New(fmt.Sprintf("status code error: %d", res.StatusCode))
 	}
 
 	body, err := io.ReadAll(res.Body)

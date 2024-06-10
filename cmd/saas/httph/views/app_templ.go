@@ -33,7 +33,7 @@ func AppIndexPage(presentations []*models.Presentation) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div><div class=\"flex gap-6 items-center\"><h1 class=\"text-3xl font-bold\">Presentations</h1><script>\n                    window.addEventListener(\"load\", function () {\n                        const { createApp } = Vue;\n\n                        createApp({\n                            data() {\n                                return {\n                                    notionUrl: \"\",\n                                    loading: false\n                                }\n                            },\n                            methods: {\n                                async parseAndCreateNewPresentation() {\n                                    if (!this.notionUrl) {\n                                        alert(\"Notion url is required\");\n                                        return;\n                                    }\n\n                                    this.loading = true;\n\n                                    const response = await fetch(\"/app/presentation/new\", {\n                                        method: \"POST\",\n                                        headers: {\n                                            \"Content-Type\": \"application/json\"\n                                        },\n                                        body: JSON.stringify({\n                                            notionUrl: this.notionUrl\n                                        })\n                                    });\n\n                                    this.loading = false;\n\n                                    const json = await response.json();\n\n                                    if (response.ok) {\n                                        window.location.href = \"/app/presentation/\" + json.id;\n                                    } else {\n                                        alert(\"Failed to create new presentation: \" + json.message);\n                                    }\n                                }\n                            },\n                        }).mount(\"#new-presentation-component\")\n                    });\n                </script><div id=\"new-presentation-component\" class=\"join relative overflow-hidden\"><input type=\"text\" class=\"input input-bordered join-item bg-white\" placeholder=\"Notion url\" v-model=\"notionUrl\"> <button class=\"btn btn-primary join-item\" @click=\"parseAndCreateNewPresentation\">+ New</button><div v-if=\"loading\" class=\"absolute top-0 left-0 flex w-full h-full items-center justify-center bg-black bg-opacity-30 text-white text-2xl z-10\"><span class=\"loading loading-spinner loading-lg text-primary\"></span></div></div></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"w-full\"><div class=\"flex gap-6 items-center\"><h1 class=\"text-3xl font-bold\">Presentations</h1><script>\n                    window.addEventListener(\"load\", function () {\n                        const { createApp } = Vue;\n\n                        createApp({\n                            data() {\n                                return {\n                                    notionUrl: \"\",\n                                    loading: false\n                                }\n                            },\n                            methods: {\n                                async parseAndCreateNewPresentation() {\n                                    if (!this.notionUrl) {\n                                        alert(\"Notion url is required\");\n                                        return;\n                                    }\n\n                                    this.loading = true;\n\n                                    const response = await fetch(\"/app/presentation/new\", {\n                                        method: \"POST\",\n                                        headers: {\n                                            \"Content-Type\": \"application/json\"\n                                        },\n                                        body: JSON.stringify({\n                                            notionUrl: this.notionUrl\n                                        })\n                                    });\n\n                                    this.loading = false;\n\n                                    const json = await response.json();\n\n                                    if (response.ok) {\n                                        window.location.href = \"/app/presentation/\" + json.id;\n                                    } else {\n                                        alert(\"Failed to create new presentation: \" + json.message);\n                                    }\n                                }\n                            },\n                        }).mount(\"#new-presentation-component\")\n                    });\n                </script><div id=\"new-presentation-component\" class=\"join relative overflow-hidden\"><input type=\"text\" class=\"input input-bordered join-item bg-white\" placeholder=\"Notion url\" v-model=\"notionUrl\"> <button class=\"btn btn-primary join-item\" @click=\"parseAndCreateNewPresentation\">+ New</button><div v-if=\"loading\" class=\"absolute top-0 left-0 flex w-full h-full items-center justify-center bg-black bg-opacity-30 text-white text-2xl z-10\"><span class=\"loading loading-spinner loading-lg text-primary\"></span></div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -41,36 +41,73 @@ func AppIndexPage(presentations []*models.Presentation) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script>\n                window.addEventListener(\"load\", function () {\n                    const { createApp } = Vue;\n\n                    const presentationsData = JSON.parse(\n                        document.getElementById(\"presentations-data\").textContent\n                    );\n\n                    if (!presentationsData) {\n                        alert(\"No data found\");\n                        return;\n                    }\n\n                    createApp({\n                        data() {\n                            return {\n                                presentations: presentationsData.reduce((acc, presentation) => {\n                                    acc[presentation.id] = presentation;\n                                    return acc;\n                                }, {})\n                            }\n                        },\n                        methods: {\n                            async deletePresentation(id) {\n                                const confiremed = confirm(`Are you sure you want to delete presentation ${this.presentations[id].title}?`);\n                                if (!confiremed) {\n                                    return;\n                                }\n\n                                const response = await fetch(\"/api/collections/presentation/records/\" + id, {\n                                    method: \"DELETE\",\n                                    headers: {\n                                        \"Content-Type\": \"application/json\"\n                                    }\n                                });\n\n                                delete this.presentations[id];\n\n                                if (response.ok) {\n                                   return;\n                                } else {\n                                    alert(\"Failed to delete new presentation: \" + json.message);\n                                }\n                            }\n                        },\n                    }).mount(\"#presentations-list-component\")\n                });\n            </script><div id=\"presentations-list-component\" class=\"py-6 grid gap-3 grid-cols-3\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script>\n                window.addEventListener(\"load\", function () {\n                    const { createApp } = Vue;\n\n                    const presentationsData = JSON.parse(\n                        document.getElementById(\"presentations-data\").textContent\n                    );\n\n                    if (!presentationsData) {\n                        alert(\"No data found\");\n                        return;\n                    }\n\n                    createApp({\n                        data() {\n                            return {\n                                presentations: presentationsData.reduce((acc, presentation) => {\n                                    acc[presentation.id] = presentation;\n                                    return acc;\n                                }, {})\n                            }\n                        },\n                        methods: {\n                            async deletePresentation(id) {\n                                const confiremed = confirm(`Are you sure you want to delete presentation ${this.presentations[id].title}?`);\n                                if (!confiremed) {\n                                    return;\n                                }\n\n                                const response = await fetch(\"/api/collections/presentation/records/\" + id, {\n                                    method: \"DELETE\",\n                                    headers: {\n                                        \"Content-Type\": \"application/json\"\n                                    }\n                                });\n\n                                delete this.presentations[id];\n\n                                if (response.ok) {\n                                   return;\n                                } else {\n                                    alert(\"Failed to delete new presentation: \" + json.message);\n                                }\n                            }\n                        },\n                    }).mount(\"#presentations-list-component\")\n                });\n            </script><div id=\"presentations-list-component\" class=\"py-6 grid gap-3 grid-cols-3 w-full\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			if len(presentations) == 0 {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"text-center text-gray-500 dark:text-gray-400\">There is no presentations... yet...</div>")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"text-center text-gray-500 dark:text-gray-400\"><p>There is no presentations... yet... to create one you need:</p><p>1. Create Notion page</p><p>2. Devide page into section with Divider (---)</p><p>3. Make it publicly available and copy link into \"+ New\" presentation input</p></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
 			for _, presentation := range presentations {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"card bg-white shadow\" v-if=\"")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"card bg-white shadow w-full\" v-if=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var3 string
 				templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(`presentations['` + presentation.Id + `']`)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app.templ`, Line: 120, Col: 101}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app.templ`, Line: 123, Col: 108}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><div class=\"card-body\"><a class=\"card-title\" href=\"")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><div class=\"card-body\"><div class=\"flex justify-between items-center\"><p class=\"text-xs\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var4 templ.SafeURL = templ.SafeURL("/app/presentation/" + presentation.Id)
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var4)))
+				var templ_7745c5c3_Var4 string
+				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(presentation.Created.Time().Format("2006-01-02 15:04"))
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app.templ`, Line: 127, Col: 92}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				if presentation.Public {
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<a class=\"badge badge-primary\" target=\"_blank\" href=\"")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					var templ_7745c5c3_Var5 templ.SafeURL = templ.SafeURL("/public-presentations/" + presentation.Id)
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var5)))
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">public</a>")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				} else {
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"badge badge-ghost\">private</div>")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><a class=\"card-title\" href=\"")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var6 templ.SafeURL = templ.SafeURL("/app/presentation/" + presentation.Id)
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var6)))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -78,51 +115,77 @@ func AppIndexPage(presentations []*models.Presentation) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var5 string
-				templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(presentation.Title)
+				var templ_7745c5c3_Var7 string
+				templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(presentation.Title)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app.templ`, Line: 122, Col: 133}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app.templ`, Line: 135, Col: 133}
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a><p class=\"font-normal text-gray-700 dark:text-gray-400\">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var6 string
-				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(presentation.Description)
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app.templ`, Line: 124, Col: 58}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a> ")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><div class=\"card-actions\"><a class=\"btn btn-ghost\" href=\"")
+				if presentation.Public {
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<a class=\"link text-xs\" href=\"")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					var templ_7745c5c3_Var8 templ.SafeURL = templ.SafeURL("/public-presentations/" + presentation.Id)
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var8)))
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">Public link</a>")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p class=\"font-normal text-gray-700 dark:text-gray-400\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var7 templ.SafeURL = templ.SafeURL("/app/presentation/" + presentation.Id)
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var7)))
+				if presentation.Description != "" {
+					var templ_7745c5c3_Var9 string
+					templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(presentation.Description)
+					if templ_7745c5c3_Err != nil {
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `app.templ`, Line: 143, Col: 62}
+					}
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				} else {
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("No description")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><div class=\"card-actions justify-between mt-2\"><a class=\"btn btn-ghost\" href=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">Edit</a> <button class=\"btn btn-ghost\">Share</button> <button class=\"btn btn-ghost\" @click=\"")
+				var templ_7745c5c3_Var10 templ.SafeURL = templ.SafeURL("/app/presentation/" + presentation.Id)
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var10)))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var8 string
-				templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("deletePresentation('" + presentation.Id + "')")
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app.templ`, Line: 133, Col: 118}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" fill=\"currentColor\" class=\"size-4\"><path d=\"M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z\"></path> <path d=\"M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z\"></path></svg> Edit</a> <button class=\"btn btn-ghost\" @click=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">Delete</button></div></div></div>")
+				var templ_7745c5c3_Var11 string
+				templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs("deletePresentation('" + presentation.Id + "')")
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app.templ`, Line: 156, Col: 118}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" fill=\"currentColor\" class=\"size-4\"><path fill-rule=\"evenodd\" d=\"M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z\" clip-rule=\"evenodd\"></path></svg> Delete</button></div></div></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

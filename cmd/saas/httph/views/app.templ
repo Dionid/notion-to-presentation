@@ -6,7 +6,7 @@ import (
 
 templ AppIndexPage(presentations []*models.Presentation) {
 	@AppLayout() {
-        <div>
+        <div class="w-full">
             <div class="flex gap-6 items-center">
                 <h1 class="text-3xl font-bold">Presentations</h1>
                 <script>
@@ -110,27 +110,53 @@ templ AppIndexPage(presentations []*models.Presentation) {
                     }).mount("#presentations-list-component")
                 });
             </script>
-            <div id="presentations-list-component" class="py-6 grid gap-3 grid-cols-3">
+            <div id="presentations-list-component" class="py-6 grid gap-3 grid-cols-3 w-full">
                 if (len(presentations) == 0) {
                     <div class="text-center text-gray-500 dark:text-gray-400">
-                        There is no presentations... yet...
+                        <p>There is no presentations... yet... to create one you need:</p>
+                        <p>1. Create Notion page</p>
+                        <p>2. Devide page into section with Divider (---)</p>
+                        <p>3. Make it publicly available and copy link into "+ New" presentation input</p>
                     </div>
                 }
                 for _, presentation := range presentations {
-                    <div class="card bg-white shadow" v-if={ `presentations['`+ presentation.Id +`']` }>
+                    <div class="card bg-white shadow w-full" v-if={ `presentations['`+ presentation.Id +`']` }>
                         <div class="card-body">
+                            <div class="flex justify-between items-center">
+                                <p class="text-xs">
+                                    { presentation.Created.Time().Format("2006-01-02 15:04") }
+                                </p>
+                                if presentation.Public {
+                                    <a class="badge badge-primary" target="_blank" href={ templ.SafeURL("/public-presentations/" + presentation.Id) }>public</a>
+                                } else {
+                                    <div class="badge badge-ghost">private</div>
+                                }
+                            </div>
                             <a class="card-title" href={ templ.SafeURL("/app/presentation/" + presentation.Id) }>{ presentation.Title }</a>
+                            if presentation.Public {
+                                <a class="link text-xs" href={ templ.SafeURL("/public-presentations/" + presentation.Id) }>
+                                    Public link
+                                </a>
+                            }
                             <p class="font-normal text-gray-700 dark:text-gray-400">
-                                { presentation.Description }
+                                if presentation.Description != "" {
+                                    { presentation.Description }
+                                } else {
+                                    No description
+                                }
                             </p>
-                            <div class="card-actions">
+                            <div class="card-actions justify-between mt-2">
                                 <a class="btn btn-ghost" href={ templ.SafeURL("/app/presentation/" + presentation.Id) }>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                        <path d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z" />
+                                        <path d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z" />
+                                    </svg>
                                     Edit
                                 </a>
-                                <button class="btn btn-ghost">
-                                    Share
-                                </button>
                                 <button class="btn btn-ghost" @click={ "deletePresentation('" + presentation.Id + "')" }>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                        <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd" />
+                                    </svg>
                                     Delete
                                 </button>
                             </div>

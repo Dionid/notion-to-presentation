@@ -82,6 +82,9 @@ window.addEventListener("load", function () {
       },
     },
     computed: {
+      publicLink() {
+        return "https://n2p.dev/public-presentations/" + this.id;
+      },
       changedData() {
         return [
           this.title,
@@ -120,6 +123,10 @@ window.addEventListener("load", function () {
       },
     },
     methods: {
+      copyPublicLink() {
+        navigator.clipboard.writeText(this.publicLink);
+        alert("Copied to clipboard");
+      },
       toggleConfigExpanded() {
         const el = document.getElementById("presentation-config");
 

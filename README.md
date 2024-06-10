@@ -31,6 +31,10 @@ DONE
 
 ## Third phase. Testing
 
+1. Shared button
+1. Add watermark
+1. Add FAQ on how to create presentation
+1. JSON limit
 1. Test with more blocks
 1. HTML
     1. Video
@@ -39,6 +43,7 @@ DONE
 
 ## Fourth phase. Polish
 
+1. Add tech support
 1. Create n2p.dev email
 1. Resend verification email
 1. Add reveal.js to `/app`
@@ -55,6 +60,7 @@ DONE
 
 ## X phase
 
+1. Make video
 1. Profile
     1. Picture
 1. Adapt to mobile

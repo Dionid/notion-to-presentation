@@ -631,6 +631,11 @@ video {
   display: none;
 }
 
+.size-4 {
+  width: 1rem;
+  height: 1rem;
+}
+
 .h-12 {
   height: 3rem;
 }

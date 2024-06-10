@@ -64,7 +64,7 @@ func PreviewHandlers(e *core.ServeEvent, app core.App, gctx context.Context, pre
 		// # Form urls
 		parsedUrl, err := url.Parse(data.Url)
 		if err != nil {
-			return err
+			return fmt.Errorf("Failed to parse url: %w", err)
 		}
 
 		domain := fmt.Sprintf("%s://%s", parsedUrl.Scheme, parsedUrl.Host)
@@ -73,12 +73,12 @@ func PreviewHandlers(e *core.ServeEvent, app core.App, gctx context.Context, pre
 		// # Get page blocks
 		responseChunks, err := ntp.GetNotionBlocks(domain, mainPageId)
 		if err != nil {
-			return err
+			return fmt.Errorf("Failed to get notion blocks: %w", err)
 		}
 
 		chunkedBlocks, err := ntp.FormChunkedBlocks(domain, responseChunks, mainPageId)
 		if err != nil {
-			return err
+			return fmt.Errorf("Failed to form chunked blocks: %w", err)
 		}
 
 		// # Form html
