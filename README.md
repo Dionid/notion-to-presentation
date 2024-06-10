@@ -45,13 +45,9 @@ DONE
 
 1. Add tech support
 1. Create n2p.dev email
-1. Resend verification email
 1. Add reveal.js to `/app`
 1. Make good demo presentation
-1. Change icons
-1. Login and password autocomplete
 1. Toast
-1. Compile JS and CSS
 1. ...
 
 ## Fifth phase. Go live
@@ -63,6 +59,7 @@ DONE
 1. Make video
 1. Profile
     1. Picture
+1. Compile JS and CSS
 1. Adapt to mobile
 1. Presentations pagination
 1. Search in presentations

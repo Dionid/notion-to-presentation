@@ -63,7 +63,7 @@ window.addEventListener("load", function () {
         if (requestVerification.ok) {
           window.location.href = "/auth/sign-in";
         } else {
-          const requestVerificationJson = await response.json();
+          const requestVerificationJson = await requestVerification.json();
           this.error = requestVerificationJson.message;
         }
       },

@@ -90,10 +90,20 @@ templ MyProfilePage(user *models.User) {
                     window.addEventListener("load", function () {
                         const { createApp } = Vue
 
+                        const userData = JSON.parse(
+                            document.getElementById("user-data").textContent
+                        );
+
+                        if (!userData) {
+                            alert("No data found");
+                            return;
+                        }
+
                         createApp({
                             data() {
                                 return {
                                     error: "",
+                                    email: userData.email,
                                     newEmail: "",
                                     loading: false,
                                 }
@@ -104,6 +114,29 @@ templ MyProfilePage(user *models.User) {
                                 },
                             },
                             methods: {
+                                async requestEmailVerification() {
+                                    this.loading = true;
+
+                                    const requestVerification = await fetch(
+                                        "/api/collections/users/request-verification",
+                                        {
+                                            method: "POST",
+                                            headers: {
+                                            "Content-Type": "application/json",
+                                            },
+                                            body: JSON.stringify({ email: this.email }),
+                                        }
+                                    );
+
+                                    this.loading = false;
+
+                                    if (requestVerification.ok) {
+                                        alert("Verification requested!")
+                                    } else {
+                                        const requestVerificationJson = await requestVerification.json();
+                                        this.error = requestVerificationJson.message;
+                                    }
+                                },
                                 async save() {
                                     const data = {
                                         newEmail: this.newEmail,
@@ -157,6 +190,9 @@ templ MyProfilePage(user *models.User) {
                                 </span>
                             </div>
                             <button class="btn btn-primary" :disabled="newEmail === ''" type="button" @click="save">Request email change</button>
+                            if user.Verified == false {
+                                <button class="btn btn-primary" type="button" @click="requestEmailVerification">Request email verification</button>
+                            }
                         </form>
                     </div>
                     <div v-if="loading" class="absolute top-0 left-0 flex w-full h-full items-center justify-center bg-black bg-opacity-30 text-white text-2xl z-10">

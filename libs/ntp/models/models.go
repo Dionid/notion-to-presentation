@@ -15,6 +15,7 @@ type User struct {
 	models.BaseModel
 
 	Email        string `json:"email" db:"email"`
+	Verified     bool   `json:"verified" db:"verified"`
 	Name         string `json:"name" db:"name"`
 	PasswordHash string `json:"passwordHash" db:"password_hash"`
 	Description  string `json:"description" db:"description"`
