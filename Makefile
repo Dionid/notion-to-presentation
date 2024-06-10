@@ -31,7 +31,10 @@ build-cli:
 	make build-cli-mac && make build-cli-linux
 
 build-cli-mac:
-	GOARCH=amd64 GOOS=darwin go build -o ${BINARY_NAME}-darwin ./cmd/cli
+	GOARCH=amd64 GOOS=darwin go build -o ${BINARY_NAME}-cli-darwin ./cmd/cli
+
+build-saas-mac:
+	GOARCH=amd64 GOOS=darwin go build -o ${BINARY_NAME}-saas-darwin ./cmd/saas
 
 clean-mac:
 	go clean
@@ -45,8 +48,10 @@ build-saas-linux:
 
 clean:
 	go clean
-	rm ${BINARY_NAME}-darwin
-	rm ${BINARY_NAME}-linux
+	rm ${BINARY_NAME}-cli-darwin
+	rm ${BINARY_NAME}-cli-linux
+	rm ${BINARY_NAME}-saas-darwin
+	rm ${BINARY_NAME}-saas-linux
 
 # Setup
 

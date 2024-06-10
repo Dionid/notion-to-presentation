@@ -2,7 +2,6 @@ package httph
 
 import (
 	"context"
-	"os"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
@@ -23,7 +22,9 @@ type Config struct {
 func InitApi(config Config, app core.App, gctx context.Context) {
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		// # Static
-		e.Router.GET("/public/*", apis.StaticDirectoryHandler(os.DirFS("public"), true))
+		// e.Router.GET("/public/*", apis.StaticDirectoryHandler(os.DirFS("public"), true))
+
+		e.Router.Static("/public", "public")
 
 		// # PB Auth
 		e.Router.Use(httphlib.LoadAuthContextFromCookieMiddleware(app))
