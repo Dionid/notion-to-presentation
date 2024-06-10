@@ -1,0 +1,143 @@
+package views
+
+import (
+    "github.com/Dionid/notion-to-presentation/libs/ntp/models"
+)
+
+templ AppIndexPage(presentations []*models.Presentation) {
+	@AppLayout() {
+        <div>
+            <div class="flex gap-6 items-center">
+                <h1 class="text-3xl font-bold">Presentations</h1>
+                <script>
+                    window.addEventListener("load", function () {
+                        const { createApp } = Vue;
+
+                        createApp({
+                            data() {
+                                return {
+                                    notionUrl: "",
+                                    loading: false
+                                }
+                            },
+                            methods: {
+                                async parseAndCreateNewPresentation() {
+                                    if (!this.notionUrl) {
+                                        alert("Notion url is required");
+                                        return;
+                                    }
+
+                                    this.loading = true;
+
+                                    const response = await fetch("/app/presentation/new", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            notionUrl: this.notionUrl
+                                        })
+                                    });
+
+                                    this.loading = false;
+
+                                    const json = await response.json();
+
+                                    if (response.ok) {
+                                        window.location.href = "/app/presentation/" + json.id;
+                                    } else {
+                                        alert("Failed to create new presentation: " + json.message);
+                                    }
+                                }
+                            },
+                        }).mount("#new-presentation-component")
+                    });
+                </script>
+                <div id="new-presentation-component" class="join relative overflow-hidden">
+                    <input type="text" class="input input-bordered join-item bg-white" placeholder="Notion url" v-model="notionUrl">
+                    <button class="btn btn-primary join-item" @click="parseAndCreateNewPresentation">+ New</button>
+                    <div v-if="loading" class="absolute top-0 left-0 flex w-full h-full items-center justify-center bg-black bg-opacity-30 text-white text-2xl z-10">
+                        <span class="loading loading-spinner loading-lg text-primary"></span>
+                    </div>
+                </div>
+            </div>
+            @templ.JSONScript("presentations-data", presentations)
+             <script>
+                window.addEventListener("load", function () {
+                    const { createApp } = Vue;
+
+                    const presentationsData = JSON.parse(
+                        document.getElementById("presentations-data").textContent
+                    );
+
+                    if (!presentationsData) {
+                        alert("No data found");
+                        return;
+                    }
+
+                    createApp({
+                        data() {
+                            return {
+                                presentations: presentationsData.reduce((acc, presentation) => {
+                                    acc[presentation.id] = presentation;
+                                    return acc;
+                                }, {})
+                            }
+                        },
+                        methods: {
+                            async deletePresentation(id) {
+                                const confiremed = confirm(`Are you sure you want to delete presentation ${this.presentations[id].title}?`);
+                                if (!confiremed) {
+                                    return;
+                                }
+
+                                const response = await fetch("/api/collections/presentation/records/" + id, {
+                                    method: "DELETE",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    }
+                                });
+
+                                delete this.presentations[id];
+
+                                if (response.ok) {
+                                   return;
+                                } else {
+                                    alert("Failed to delete new presentation: " + json.message);
+                                }
+                            }
+                        },
+                    }).mount("#presentations-list-component")
+                });
+            </script>
+            <div id="presentations-list-component" class="py-6 grid gap-3 grid-cols-3">
+                if (len(presentations) == 0) {
+                    <div class="text-center text-gray-500 dark:text-gray-400">
+                        There is no presentations... yet...
+                    </div>
+                }
+                for _, presentation := range presentations {
+                    <div class="card bg-white shadow" v-if={ `presentations['`+ presentation.Id +`']` }>
+                        <div class="card-body">
+                            <a class="card-title" href={ templ.SafeURL("/app/presentation/" + presentation.Id) }>{ presentation.Title }</a>
+                            <p class="font-normal text-gray-700 dark:text-gray-400">
+                                { presentation.Description }
+                            </p>
+                            <div class="card-actions">
+                                <a class="btn btn-ghost" href={ templ.SafeURL("/app/presentation/" + presentation.Id) }>
+                                    Edit
+                                </a>
+                                <button class="btn btn-ghost">
+                                    Share
+                                </button>
+                                <button class="btn btn-ghost" @click={ "deletePresentation('" + presentation.Id + "')" }>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}

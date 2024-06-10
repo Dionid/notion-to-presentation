@@ -1,0 +1,61 @@
+package views
+
+import (
+    "github.com/Dionid/notion-to-presentation/cmd/saas/httph/views/partials"
+)
+
+templ AppLayout() {
+	@BaseLayout() {
+        <div class="flex flex-col h-full">
+            <header class="w-full flex items-center justify-center max-w-6xl mx-auto">
+                <div class="w-full m-6 gap-2 flex">
+                    <a href="/app" class="h-12 flex justify-center items-center">
+                        @partials.Logo()
+                    </a>
+                    <script>
+                        window.addEventListener("load", () => {
+                            if (window.location.pathname === "/app") {
+                                const el = document.getElementById("presentation-link").classList
+                                el.add("btn-primary")
+                                el.remove("btn-ghost")
+                            } else if (window.location.pathname === "/app/my-profile") {
+                                const el = document.getElementById("my-profile-link").classList
+                                el.add("btn-primary")
+                                el.remove("btn-ghost")
+                            }
+                        })
+                    </script>
+                    <div class="ml-auto">
+                        <a href="/app" class="btn btn-ghost" id="presentation-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                            Presentations
+                        </a>
+                        <a href="/app/my-profile" class="btn btn-ghost" id="my-profile-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            My profile
+                        </a>
+                        <script>
+                            window.window.addEventListener("load", function () {
+                                document.getElementById("logout-button").addEventListener("click", async () => {
+                                    await window.cookieStore.delete("pb_auth")
+                                    window.location.href = ""
+                                })
+                            })
+                        </script>
+                        <button class="btn btn-ghost" id="logout-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <div class="w-full mx-auto flex max-w-6xl p-6 h-full">
+                { children... }
+            </div>
+            <footer class="w-full flex items-center justify-between max-w-6xl mx-auto p-6">
+                <div>Made by David Shekunts with ♥️</div>
+                <div>@templ.Raw("@2024")</div>
+            </footer>
+        </div>
+    }
+}

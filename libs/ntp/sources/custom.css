@@ -1,0 +1,23 @@
+
+:root {
+    --r-main-font-size: 35px;
+    --r-main-font: Arial;
+}
+
+.columns-holder {
+    display: flex;
+}
+
+.columns-holder .column {
+    padding-right: 30px;
+    width: 100%;
+}
+
+li {
+    margin-bottom: 15px;
+}
+
+.reveal .code-wrapper code {
+    padding: 30px;
+    border-radius: 10px;
+}

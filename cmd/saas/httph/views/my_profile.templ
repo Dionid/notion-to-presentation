@@ -1,0 +1,295 @@
+package views
+
+import "github.com/Dionid/notion-to-presentation/libs/ntp/models"
+
+templ MyProfilePage(user *models.User) {
+	@AppLayout() {
+        <div class="w-full flex-col">
+            @templ.JSONScript("user-data", user)
+            <h1 class="text-3xl font-bold">My profile</h1>
+            <div class="grid grid-cols-3 gap-4 py-6">
+                <script>
+                    window.addEventListener("load", function () {
+                        const { createApp } = Vue
+
+                        const userData = JSON.parse(
+                            document.getElementById("user-data").textContent
+                        );
+
+                        if (!userData) {
+                            alert("No data found");
+                            return;
+                        }
+
+                        createApp({
+                            data() {
+                                return {
+                                    error: "",
+                                    name: userData.name,
+                                    description: userData.description,
+                                }
+                            },
+                            watch: {
+                                name() {
+                                    this.error = "";
+                                },
+                                description() {
+                                    this.error = "";
+                                },
+                            },
+                            methods: {
+                                async save() {
+                                    const data = {
+                                        name: this.name,
+                                        description: this.description,
+                                    };
+
+                                    const response = await fetch("/api/collections/users/records/" + userData.id, {
+                                        method: "PATCH",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify(data),
+                                    });
+
+                                    const respJson = await response.json();
+
+                                    if (response.ok) {
+                                        alert("Saved")
+                                    } else {
+                                        this.error = respJson.message;
+                                    }
+                                }
+                            },
+                        }).mount("#user-info-component")
+                    })
+                </script>
+                <div id="user-info-component" class="card bg-white shadow">
+                    <div class="card-body">
+                        <div class="w-full text-xl mb-4">Info</div>
+                        <form class="flex flex-col gap-4">
+                            <div class="flex items-center">
+                                <span class="shrink-0" style="width:100px;">Name:</span>
+                                <input class="input input-bordered w-full" type="text" v-model="name">
+                            </div>
+                            <div class="flex">
+                                <span style="width:100px;" class="shrink-0">Description:</span>
+                                <textarea class="textarea textarea-bordered w-full" v-model="description"></textarea>
+                            </div>
+                            <div v-if="error" role="alert" class="alert alert-error mt-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <span>
+                                    @templ.Raw("{{ error }}")
+                                </span>
+                            </div>
+                            <button class="btn btn-primary" type="button" @click="save">Save</button>
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    window.addEventListener("load", function () {
+                        const { createApp } = Vue
+
+                        createApp({
+                            data() {
+                                return {
+                                    error: "",
+                                    newEmail: "",
+                                    loading: false,
+                                }
+                            },
+                            watch: {
+                                newEmail() {
+                                    this.error = "";
+                                },
+                            },
+                            methods: {
+                                async save() {
+                                    const data = {
+                                        newEmail: this.newEmail,
+                                    };
+
+                                    this.loading = true;
+
+                                    const response = await fetch("/api/collections/users/request-email-change", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify(data),
+                                    });
+
+                                    this.loading = false;
+
+                                    console.log("response", response)
+
+                                    if (response.ok) {
+                                        alert("Requested! Check your email for confirmation link.")
+                                        this.requestedEmail = this.newEmail
+                                        this.newEmail = "";
+                                    } else {
+                                        this.error = respJson.message;
+                                    }
+                                }
+                            },
+                        }).mount("#user-email-component")
+                    })
+                </script>
+                <div id="user-email-component" class="card bg-white shadow relative overflow-hidden">
+                    <div class="card-body">
+                        <div class="w-full text-xl mb-4">Email</div>
+                        <form class="flex flex-col gap-4">
+                            <div class="flex items-center">
+                                <span class="inline-block" style="width: 115px">Email:</span>
+                                <span class="inline-block" style="width: 115px" v-if="requestedEmail">
+                                    @templ.Raw("{{ requestedEmail }} (requested)")
+                                </span>
+                                <span class="inline-block" style="width: 115px" v-if="!requestedEmail">{ user.Email }</span>
+                            </div>
+                            <label class="flex items-center">
+                                <span class="shrink-0 inline-block" style="width: 115px">New email:</span>
+                                <input class="input input-bordered w-full" type="text" v-model="newEmail">
+                            </label>
+                            <div v-if="error" role="alert" class="alert alert-error mt-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <span>
+                                    @templ.Raw("{{ error }}")
+                                </span>
+                            </div>
+                            <button class="btn btn-primary" :disabled="newEmail === ''" type="button" @click="save">Request email change</button>
+                        </form>
+                    </div>
+                    <div v-if="loading" class="absolute top-0 left-0 flex w-full h-full items-center justify-center bg-black bg-opacity-30 text-white text-2xl z-10">
+                        <span class="loading loading-spinner loading-lg text-primary"></span>
+                    </div>
+                </div>
+                <script>
+                    window.addEventListener("load", function () {
+                        const { createApp } = Vue
+
+                        const userData = JSON.parse(
+                            document.getElementById("user-data").textContent
+                        );
+
+                        if (!userData) {
+                            alert("No data found");
+                            return;
+                        }
+
+                        createApp({
+                            data() {
+                                return {
+                                    error: "",
+                                    oldPassword: "",
+                                    newPassword: "",
+                                    newPasswordRepeat: "",
+                                }
+                            },
+                            watch: {
+                                oldPassword() {
+                                    this.error = "";
+                                },
+                                newPassword() {
+                                    this.error = "";
+                                },
+                                newPasswordRepeat() {
+                                    this.error = "";
+                                },
+                            },
+                            computed: {
+                                valid() {
+                                    return this.oldPassword !== "" && this.newPassword !== "" && this.newPasswordRepeat !== "" && this.newPassword === this.newPasswordRepeat;
+                                }
+                            },
+                            methods: {
+                                async save() {
+                                    if (!this.oldPassword || !this.newPassword || !this.newPasswordRepeat) {
+                                        this.error = "All fields are required";
+                                        return;
+                                    }
+
+                                    if (this.newPassword.length < 8 || this.newPasswordRepeat.length < 8) {
+                                        this.error = "Password must be at least 8 characters long";
+                                        return;
+                                    }
+
+                                    if (this.newPassword !== this.newPasswordRepeat) {
+                                        this.error = "Passwords do not match";
+                                        return;
+                                    }
+
+                                    const data = {
+                                        password: this.newPassword,
+                                        passwordConfirm: this.newPasswordRepeat,
+                                        oldPassword: this.oldPassword,
+                                    };
+
+                                    const response = await fetch("/api/collections/users/records/" + userData.id, {
+                                        method: "PATCH",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify(data),
+                                    });
+
+                                    if (!response.ok) {
+                                        const respJson = await response.json();
+                                        this.error = respJson.message;
+                                        return;
+                                    }
+
+                                    cookieStore.delete("pb_auth")
+
+                                    const newCookieResponse = await fetch("/auth/sign-in", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            email: userData.email,
+                                            password: this.newPassword,
+                                        }),
+                                    });
+
+                                    if (!newCookieResponse.ok) {
+                                        const respJson = await newCookieResponse.json();
+                                        this.error = respJson.message;
+                                        return;
+                                    }
+
+                                    alert("Password changed")
+                                }
+                            },
+                        }).mount("#user-password-component")
+                    })
+                </script>
+                <div id="user-password-component" class="card bg-white shadow">
+                    <div class="card-body">
+                        <div class="w-full text-xl mb-4">Password</div>
+                        <form class="flex flex-col gap-4">
+                            <label class="flex items-center">
+                                <span class="inline-block" style="width: 120px">Old password:</span>
+                                <input class="input input-bordered" type="password" v-model="oldPassword">
+                            </label>
+                            <label class="flex items-center">
+                                <span class="inline-block" style="width: 120px">New password:</span>
+                                <input class="input input-bordered" type="password" v-model="newPassword">
+                            </label>
+                            <label class="flex items-center">
+                                <span class=" inline-block" style="width: 120px">Repeat:</span>
+                                <input class="input input-bordered" type="password" v-model="newPasswordRepeat">
+                            </label>
+                            <div v-if="error" role="alert" class="alert alert-error mt-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <span>
+                                    @templ.Raw("{{ error }}")
+                                </span>
+                            </div>
+                            <button class="btn btn-primary" type="button" :disabled="valid === false" @click="save">Change password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
