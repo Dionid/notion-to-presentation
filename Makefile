@@ -38,7 +38,10 @@ clean-mac:
 	rm ${BINARY_NAME}-darwin
 
 build-cli-linux:
-	GOARCH=amd64 GOOS=linux go build -o ${BINARY_NAME}-linux ./cmd/cli
+	GOARCH=amd64 GOOS=linux go build -o ${BINARY_NAME}-cli-linux ./cmd/cli
+
+build-saas-linux:
+	GOARCH=amd64 GOOS=linux go build -o ${BINARY_NAME}-saas-linux ./cmd/saas
 
 clean:
 	go clean
@@ -50,5 +53,4 @@ clean:
 setup:
 	npm i
 	go install github.com/a-h/templ/cmd/templ@latest
-	go get
 	go mod tidy

@@ -23,8 +23,7 @@ Don't take this project as a reference for best practices.
 
 ## First phase
 
-1. Migrations
-1. https://pocketbase.io/docs/going-to-production
+DONE
 
 ## Second phase. Deploy
 
