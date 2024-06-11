@@ -2,6 +2,7 @@ package ntp
 
 import (
 	"fmt"
+	"strings"
 )
 
 func FormSectionContent(
@@ -43,7 +44,16 @@ func FormSectionContent(
 			}
 		case "code":
 			if block.Text != nil {
-				html += "<pre><code>" + *block.Text + "</code></pre>"
+				html += fmt.Sprintf("<pre><code class='language-%s'>%s</code></pre>", strings.ToLower(*block.CodeLanguage), *block.Text)
+			}
+		case "video":
+			if block.VideoSource != nil {
+				if strings.Contains(*block.VideoSource, "youtube") {
+					html += fmt.Sprintf(`<iframe class="w-full" style="height: 100vh" src="%s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`, *block.VideoSource)
+					break
+				}
+
+				html += fmt.Sprintf(`<video src="%s" controls class="w-full"></video>`, *block.VideoSource)
 			}
 		case "numbered_list":
 			if !isNumbered {

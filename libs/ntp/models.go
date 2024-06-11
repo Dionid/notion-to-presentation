@@ -7,8 +7,10 @@ import (
 
 type ReformedNotionBlock struct {
 	Id             string
-	Type           string // "page" | "text" | "divider" | "numbered_list" | "column" | "column_list" | "header" | "sub_header" | "code" | "image"
+	Type           string // "page" | "text" | "divider" | "numbered_list" | "column" | "column_list" | "header" | "sub_header" | "code" | "image" | "bulleted_list" | "video"
 	Text           *string
+	CodeLanguage   *string
+	VideoSource    *string
 	ListStartIndex *int    // only for type == "numbered_list"
 	ImageUrl       *string // only for type == "image"
 
@@ -77,6 +79,15 @@ func GetImageUrl(format *NotionChunkResponseRecordBlockValueValueFormat) *string
 	return nil
 }
 
+func GetCodeLanguage(properties *NotionChunkResponseRecordBlockValueValueProperties) *string {
+	if properties != nil && len(properties.Language) > 0 {
+		if language, ok := properties.Language[0][0].(string); ok {
+			return &language
+		}
+	}
+	return nil
+}
+
 func ReformedNotionBlocks(
 	domain string,
 	responseChunks *NotionChunkResponse,
@@ -98,6 +109,14 @@ func ReformedNotionBlocks(
 		ListStartIndex: listStartIndex,
 		ImageUrl:       imageUrl,
 		Nested:         make([]ReformedNotionBlock, len(block.Value.Content)),
+	}
+
+	if block.Value.Type == "code" {
+		rb.CodeLanguage = GetCodeLanguage(block.Value.Properties)
+	}
+
+	if block.Value.Type == "video" {
+		rb.VideoSource = block.Value.Format.DisplaySource
 	}
 
 	for i, nestedBlockId := range block.Value.Content {
