@@ -37,7 +37,7 @@ type NotionChunkResponseRecordBlockValue struct {
 }
 
 type NotionChunkResponseRecordBlock struct {
-	SpaceId string                                   `json:"spaceId"`
+	SpaceId *string                                  `json:"spaceId,omitempty"`
 	Value   NotionChunkResponseRecordBlockValueValue `json:"value"`
 }
 

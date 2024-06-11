@@ -107,7 +107,7 @@ func ReformedNotionBlocks(
 	listStartIndex := GetListStartIndex(block.Value.Format)
 	var imageUrl *string
 
-	if block.Value.Format != nil && block.Value.Format.DisplaySource != nil {
+	if block.Value.Format != nil && block.Value.Format.DisplaySource != nil && block.Value.Type == "image" {
 		url := fmt.Sprintf(`%s/image/%s?table=block&id=%s`, domain, url.QueryEscape(*block.Value.Format.DisplaySource), block.Value.Id)
 		imageUrl = &url
 	}

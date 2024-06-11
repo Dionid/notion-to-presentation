@@ -95,10 +95,11 @@ func FormSectionContent(
 			if block.ImageUrl != nil {
 				html += fmt.Sprintf(`<img src="%s" alt="image" />`, *block.ImageUrl)
 			}
+		case "toggle":
 		case "page":
 			break
 		default:
-			fmt.Println("Block type: ", block.Type)
+			fmt.Println("Unknown block type: ", block.Type)
 		}
 
 		html += "\n"

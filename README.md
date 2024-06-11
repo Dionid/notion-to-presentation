@@ -37,7 +37,6 @@ DONE
 1. Reset password
 1. HTML
     1. Make content wider
-    1. iframe
     1. Table
     1. ? Toggle (how it will work with pdf export)
     1. Quote
@@ -88,3 +87,4 @@ DONE
 1. Change CDN to npm packages
 1. Templ
     1. Hot-reload
+1. Features requested page
