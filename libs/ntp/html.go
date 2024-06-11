@@ -95,13 +95,21 @@ func FormSectionContent(
 			if block.ImageUrl != nil {
 				html += fmt.Sprintf(`<img src="%s" alt="image" />`, *block.ImageUrl)
 			}
+		// case "audio":
+		// 	if block.AudioSource != nil {
+		// 		html += fmt.Sprintf(`<audio src="%s" controls></audio>`, *block.AudioSource)
+		// 	}
+		// case "file":
+		// 	if block.FileSource != nil {
+		// 		html += fmt.Sprintf(`<a href="%s" target="_blank" download>%s</a>`, *block.FileSource, *block.Text)
+		// 	}
 		case "callout":
 			if block.Text != nil {
 				innerText := ""
 
 				for _, nestedBlock := range block.Nested {
 					if nestedBlock.Text != nil {
-						innerText += "<br>"
+						innerText += "<br><br>"
 						innerText += *nestedBlock.Text
 					}
 				}
@@ -114,13 +122,32 @@ func FormSectionContent(
 					 </div>
 					 <div>
 					 	%s
-						<br>
 						%s
 					 </div>
 					</div>
 				</div>
 				`, *block.PageIcon, *block.Text, innerText)
 			}
+		case "quote":
+			if block.Text != nil {
+				innerText := ""
+
+				for _, nestedBlock := range block.Nested {
+					if nestedBlock.Text != nil {
+						innerText += "<br><br>"
+						innerText += *nestedBlock.Text
+					}
+				}
+
+				html += fmt.Sprintf(`
+				<div style="border-left: 4px solid; padding-left: 30px;">
+						%s
+						%s
+				</div>
+				`, *block.Text, innerText)
+			}
+		case "audio":
+		case "file":
 		case "toggle":
 		case "page":
 			break
@@ -131,7 +158,7 @@ func FormSectionContent(
 		html += "\n"
 
 		// ## Form nested blocks
-		if len(block.Nested) > 0 && block.Type != "callout" {
+		if len(block.Nested) > 0 && block.Type != "callout" && block.Type != "quote" {
 			html += FormSectionContent(block.Nested)
 		}
 

@@ -37,19 +37,9 @@ DONE
 1. Reset password
 1. HTML
     1. Make content wider
-    1. Table
-    1. ? Toggle (how it will work with pdf export)
-    1. Quote
-    1. Link to page
-    1. Callout
-    1. File
-    1. Block equation
-    1. Mermaid
-    1. Embed
-    1. ? Database
-    1. ? Button
     1. Inside text
         1. Links
+        1. Gray text
 1. Backups
 1. Add FAQ on how to create presentation
     1. Divider

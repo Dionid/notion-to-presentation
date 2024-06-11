@@ -6,10 +6,12 @@ import (
 )
 
 type ReformedNotionBlock struct {
-	Id             string
-	Type           string // "page" | "text" | "divider" | "numbered_list" | "column" | "column_list" | "header" | "sub_header" | "code" | "image" | "bulleted_list" | "video" | "embed"
-	Text           *string
-	CodeLanguage   *string // only for type == "code"
+	Id           string
+	Type         string // "page" | "text" | "divider" | "numbered_list" | "column" | "column_list" | "header" | "sub_header" | "code" | "image" | "bulleted_list" | "video" | "embed" | "callout" | "audio" | "quote"
+	Text         *string
+	CodeLanguage *string // only for type == "code"
+	// FileSource     *string // only for type == "file"
+	// AudioSource    *string // only for type == "audio"
 	VideoSource    *string // only for type == "video"
 	EmbedSource    *string // only for type == "embed"
 	PageIcon       *string // only for type == "callout"
@@ -29,15 +31,44 @@ func GetTextFormatting(
 		if formattingPart, ok := part[1].([]interface{}); ok {
 			for _, formatting := range formattingPart {
 				if f, ok := formatting.([]interface{}); ok {
-					for _, fff := range f {
-						if ff, ok := fff.(string); ok {
-							if open {
-								text += fmt.Sprintf(`<%s>`, ff)
+					if tag, ok := f[0].(string); ok {
+						if open {
+							if tag == "a" {
+								href := ""
+								if len(f) > 1 {
+									if hrefValue, ok := f[1].(string); ok {
+										href = hrefValue
+									}
+								}
+
+								text += fmt.Sprintf(`<%s target="_blank" href="%s">`, tag, href)
+							} else if tag == "h" {
+								color := ""
+								if len(f) > 1 {
+									if value, ok := f[1].(string); ok {
+										color = value
+									}
+								}
+
+								text += fmt.Sprintf(`<%s class="text-%s-400">`, tag, color)
 							} else {
-								text += fmt.Sprintf(`</%s>`, ff)
+								text += fmt.Sprintf(`<%s>`, tag)
 							}
+						} else {
+							text += fmt.Sprintf(`</%s>`, tag)
 						}
 					}
+
+					// for _, fff := range f {
+					// 	if ff, ok := fff.(string); ok {
+					// 		if open {
+
+					// 			text += fmt.Sprintf(`<%s>`, ff)
+					// 		} else {
+					// 			text += fmt.Sprintf(`</%s>`, ff)
+					// 		}
+					// 	}
+					// }
 				}
 			}
 		}
@@ -118,9 +149,27 @@ func ReformedNotionBlocks(
 		Nested:         make([]ReformedNotionBlock, len(block.Value.Content)),
 	}
 
-	if rb.Id == "2ce12a9b-babd-4813-8f6d-d7878ad70efb" {
-		fmt.Println("!!! lorem ipsum", block.Value.Type)
-	}
+	// FUTURE: Add support for other block types
+	// if block.Value.Type == "file" {
+	// 	if block.Value.Properties.Source != nil && len(block.Value.Properties.Source) > 0 {
+	// 		if block.Value.Properties.Source[0] != nil && len(block.Value.Properties.Source[0]) > 0 {
+	// 			if source, ok := block.Value.Properties.Source[0][0].(string); ok {
+	// 				rb.FileSource = &source
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	// FUTURE: Add support for other block types
+	// if block.Value.Type == "audio" {
+	// 	if block.Value.Properties.Source != nil && len(block.Value.Properties.Source) > 0 {
+	// 		if block.Value.Properties.Source[0] != nil && len(block.Value.Properties.Source[0]) > 0 {
+	// 			if source, ok := block.Value.Properties.Source[0][0].(string); ok {
+	// 				rb.AudioSource = &source
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	if rb.Type == "callout" {
 		if block.Value.Format.PageIcon != nil {
