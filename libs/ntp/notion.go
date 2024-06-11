@@ -15,6 +15,7 @@ import (
 type NotionChunkResponseRecordBlockValueValueProperties struct {
 	Title    [][]interface{} `json:"title,omitempty"`
 	Language [][]interface{} `json:"language,omitempty"`
+	Source   [][]interface{} `json:"source,omitempty"`
 }
 
 type NotionChunkResponseRecordBlockValueValueFormat struct {

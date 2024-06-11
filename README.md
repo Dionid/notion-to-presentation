@@ -37,11 +37,9 @@ DONE
 1. Reset password
 1. HTML
     1. Make content wider
-    1. Code block highlight
-    1. Video
     1. iframe
     1. Table
-    1. Toggle
+    1. ? Toggle (how it will work with pdf export)
     1. Quote
     1. Link to page
     1. Callout

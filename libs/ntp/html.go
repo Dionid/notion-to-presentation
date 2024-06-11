@@ -55,6 +55,10 @@ func FormSectionContent(
 
 				html += fmt.Sprintf(`<video src="%s" controls class="w-full"></video>`, *block.VideoSource)
 			}
+		case "embed":
+			if block.EmbedSource != nil {
+				html += fmt.Sprintf(`<iframe src="%s" class="w-full" style="height: 100vh"></iframe>`, *block.EmbedSource)
+			}
 		case "numbered_list":
 			if !isNumbered {
 				start := 1
