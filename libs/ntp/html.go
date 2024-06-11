@@ -9,6 +9,7 @@ func FormSectionContent(
 ) string {
 	html := ""
 	isNumbered := false
+	isBulleted := false
 
 	for _, block := range blocks {
 		// fmt.Println("Block type: %s", block.Type)
@@ -16,6 +17,11 @@ func FormSectionContent(
 		if isNumbered && block.Type != "numbered_list" {
 			html += "</ol>"
 			isNumbered = false
+		}
+
+		if isBulleted && block.Type != "bulleted_list" {
+			html += "</ul>"
+			isBulleted = false
 		}
 
 		switch block.Type {
@@ -26,6 +32,10 @@ func FormSectionContent(
 		case "sub_header":
 			if block.Text != nil {
 				html += "<h2>" + *block.Text + "</h2>"
+			}
+		case "sub_sub_header":
+			if block.Text != nil {
+				html += "<h3>" + *block.Text + "</h3>"
 			}
 		case "text":
 			if block.Text != nil {
@@ -45,6 +55,20 @@ func FormSectionContent(
 
 				html += fmt.Sprintf(`<ol start="%d">`, start)
 				isNumbered = true
+			}
+			if block.Text != nil {
+				html += "<li>" + *block.Text + "</li>"
+			}
+		case "bulleted_list":
+			if !isBulleted {
+				start := 1
+
+				if block.ListStartIndex != nil {
+					start = *block.ListStartIndex
+				}
+
+				html += fmt.Sprintf(`<ul start="%d">`, start)
+				isBulleted = true
 			}
 			if block.Text != nil {
 				html += "<li>" + *block.Text + "</li>"
@@ -82,6 +106,10 @@ func FormSectionContent(
 
 	if isNumbered {
 		html += "</ol>"
+	}
+
+	if isBulleted {
+		html += "</ul>"
 	}
 
 	return html

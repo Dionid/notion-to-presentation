@@ -31,15 +31,32 @@ DONE
 
 ## Third phase. Testing
 
-1. Shared button
 1. Add watermark
-1. Add FAQ on how to create presentation
-1. JSON limit
 1. Test with more blocks
+1. Invite to login after generation
+1. Reset password
 1. HTML
+    1. Make content wider
+    1. Code block highlight
     1. Video
-1. Check with multiple presentations
+    1. iframe
+    1. Table
+    1. Toggle
+    1. Quote
+    1. Link to page
+    1. Callout
+    1. File
+    1. Block equation
+    1. Mermaid
+    1. Embed
+    1. ? Database
+    1. ? Button
+    1. Inside text
+        1. Links
 1. Backups
+1. Add FAQ on how to create presentation
+    1. Divider
+    1. Supported elements
 
 ## Fourth phase. Polish
 
@@ -59,17 +76,17 @@ DONE
 1. Make video
 1. Profile
     1. Picture
-1. Compile JS and CSS
 1. Adapt to mobile
 1. Presentations pagination
 1. Search in presentations
-1. Add cookie parsing to Pocketbase
-1. Presentation image customization
+1. Author public page
+1. Presentations config
+    1. Images
 1. Theme editor
+1. Island-based links
+1. CI/CD
+1. Embed `/public` folder
+1. Compile JS and CSS
 1. Change CDN to npm packages
-1. Rerender part of page
-1. SQlite
-    1. Enable WAL mode
 1. Templ
     1. Hot-reload
-1. Embed public
