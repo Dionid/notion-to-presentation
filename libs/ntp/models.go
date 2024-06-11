@@ -9,9 +9,10 @@ type ReformedNotionBlock struct {
 	Id             string
 	Type           string // "page" | "text" | "divider" | "numbered_list" | "column" | "column_list" | "header" | "sub_header" | "code" | "image" | "bulleted_list" | "video" | "embed"
 	Text           *string
-	CodeLanguage   *string
-	VideoSource    *string
-	EmbedSource    *string
+	CodeLanguage   *string // only for type == "code"
+	VideoSource    *string // only for type == "video"
+	EmbedSource    *string // only for type == "embed"
+	PageIcon       *string // only for type == "callout"
 	ListStartIndex *int    // only for type == "numbered_list"
 	ImageUrl       *string // only for type == "image"
 
@@ -51,11 +52,14 @@ func GetText(properties *NotionChunkResponseRecordBlockValueValueProperties) *st
 
 		for _, part := range properties.Title {
 			if part != nil && len(part) > 0 {
+				content, ok := part[0].(string)
+				if !ok {
+					continue
+				}
+
 				text += GetTextFormatting(part, true)
 
-				if str, ok := part[0].(string); ok {
-					text += str
-				}
+				text += content
 
 				text += GetTextFormatting(part, false)
 			}
@@ -105,20 +109,28 @@ func ReformedNotionBlocks(
 ) ReformedNotionBlock {
 	text := GetText(block.Value.Properties)
 	listStartIndex := GetListStartIndex(block.Value.Format)
-	var imageUrl *string
-
-	if block.Value.Format != nil && block.Value.Format.DisplaySource != nil && block.Value.Type == "image" {
-		url := fmt.Sprintf(`%s/image/%s?table=block&id=%s`, domain, url.QueryEscape(*block.Value.Format.DisplaySource), block.Value.Id)
-		imageUrl = &url
-	}
 
 	rb := ReformedNotionBlock{
 		Id:             block.Value.Id,
 		Type:           block.Value.Type,
 		Text:           text,
 		ListStartIndex: listStartIndex,
-		ImageUrl:       imageUrl,
 		Nested:         make([]ReformedNotionBlock, len(block.Value.Content)),
+	}
+
+	if rb.Id == "2ce12a9b-babd-4813-8f6d-d7878ad70efb" {
+		fmt.Println("!!! lorem ipsum", block.Value.Type)
+	}
+
+	if rb.Type == "callout" {
+		if block.Value.Format.PageIcon != nil {
+			rb.PageIcon = block.Value.Format.PageIcon
+		}
+	}
+
+	if block.Value.Format != nil && block.Value.Format.DisplaySource != nil && block.Value.Type == "image" {
+		url := fmt.Sprintf(`%s/image/%s?table=block&id=%s`, domain, url.QueryEscape(*block.Value.Format.DisplaySource), block.Value.Id)
+		rb.ImageUrl = &url
 	}
 
 	if block.Value.Type == "code" {

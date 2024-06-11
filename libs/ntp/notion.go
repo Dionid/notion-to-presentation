@@ -21,6 +21,7 @@ type NotionChunkResponseRecordBlockValueValueProperties struct {
 type NotionChunkResponseRecordBlockValueValueFormat struct {
 	ListStartIndex *int    `json:"list_start_index,omitempty"`
 	DisplaySource  *string `json:"display_source,omitempty"`
+	PageIcon       *string `json:"page_icon,omitempty"`
 }
 
 type NotionChunkResponseRecordBlockValueValue struct {

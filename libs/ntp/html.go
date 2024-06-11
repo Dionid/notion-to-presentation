@@ -95,6 +95,32 @@ func FormSectionContent(
 			if block.ImageUrl != nil {
 				html += fmt.Sprintf(`<img src="%s" alt="image" />`, *block.ImageUrl)
 			}
+		case "callout":
+			if block.Text != nil {
+				innerText := ""
+
+				for _, nestedBlock := range block.Nested {
+					if nestedBlock.Text != nil {
+						innerText += "<br>"
+						innerText += *nestedBlock.Text
+					}
+				}
+
+				html += fmt.Sprintf(`
+				<div class="card" style="background-color: #383838;">
+					<div class="card-body flex-row gap-4">
+					 <div>
+					 	%s
+					 </div>
+					 <div>
+					 	%s
+						<br>
+						%s
+					 </div>
+					</div>
+				</div>
+				`, *block.PageIcon, *block.Text, innerText)
+			}
 		case "toggle":
 		case "page":
 			break
@@ -105,7 +131,7 @@ func FormSectionContent(
 		html += "\n"
 
 		// ## Form nested blocks
-		if len(block.Nested) > 0 {
+		if len(block.Nested) > 0 && block.Type != "callout" {
 			html += FormSectionContent(block.Nested)
 		}
 
