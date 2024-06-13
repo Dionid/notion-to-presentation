@@ -9,6 +9,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
+type Logger struct{}
+
+func (l *Logger) Error(msg string, args ...any) {
+	fmt.Print(msg)
+	fmt.Println(args...)
+}
+
+func (l *Logger) Debug(msg string, args ...any) {
+	fmt.Print(msg)
+	fmt.Println(args...)
+}
+
 func main() {
 	var rootCmd = &cobra.Command{
 		Use:   "n2p",
@@ -26,6 +38,7 @@ func main() {
 			targetUrl := args[len(args)-1]
 
 			err := features.FormFullHtmlPageFromNotion(
+				&Logger{},
 				targetUrl,
 			)
 			if err != nil {

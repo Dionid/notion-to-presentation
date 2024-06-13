@@ -45,14 +45,14 @@ func PublicPresentationPage(presentation *models.Presentation) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><script>\n                window.addEventListener(\"load\", function () {\n                    const revealPresentation = new Reveal({\n                        hash: true,\n                        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],\n                    });\n                \n                    revealPresentation.initialize();\n                })\n            </script><link rel=\"stylesheet\" href=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><a href=\"n2p.dev\" target=\"_blank\" class=\"absolute left-5 bottom-5 text-xs \" style=\"color: #878787;\">made with n2p.dev</a><script>\n                window.addEventListener(\"load\", function () {\n                    const revealPresentation = new Reveal({\n                        hash: true,\n                        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],\n                    });\n                \n                    revealPresentation.initialize();\n                })\n            </script><link rel=\"stylesheet\" href=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("/public/reveal/theme/" + presentation.Theme + ".css")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `public_presentation.templ`, Line: 25, Col: 95}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `public_presentation.templ`, Line: 28, Col: 95}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {

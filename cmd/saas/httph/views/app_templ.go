@@ -46,7 +46,7 @@ func AppIndexPage(presentations []*models.Presentation) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if len(presentations) == 0 {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"text-center text-gray-500 dark:text-gray-400\"><p>There is no presentations... yet... to create one you need:</p><p>1. Create Notion page</p><p>2. Devide page into section with Divider (---)</p><p>3. Make it publicly available and copy link into \"+ New\" presentation input</p></div>")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"text-gray-500 dark:text-gray-400 mt-5\"><p>There is no presentations... yet... to create one you need:</p><p>1. Create Notion page</p><p>2. Devide page into section with Divider (---)</p><p>3. Make it publicly available and copy link into \"+ New\" presentation input</p></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

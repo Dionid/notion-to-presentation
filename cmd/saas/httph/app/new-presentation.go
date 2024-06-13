@@ -58,7 +58,7 @@ func PresentationHandlers(g *echo.Group, app core.App, gctx context.Context) {
 		mainPageId := ntp.ExtractPageIdFromUrl(parsedUrl)
 
 		// # Get page blocks
-		responseChunks, err := ntp.GetNotionBlocks(domain, mainPageId)
+		responseChunks, err := ntp.GetNotionBlocks(app.Logger(), domain, mainPageId)
 		if err != nil {
 			return err
 		}

@@ -71,7 +71,7 @@ func PreviewHandlers(e *core.ServeEvent, app core.App, gctx context.Context, pre
 		mainPageId := ntp.ExtractPageIdFromUrl(parsedUrl)
 
 		// # Get page blocks
-		responseChunks, err := ntp.GetNotionBlocks(domain, mainPageId)
+		responseChunks, err := ntp.GetNotionBlocks(app.Logger(), domain, mainPageId)
 		if err != nil {
 			return fmt.Errorf("Failed to get notion blocks: %w", err)
 		}

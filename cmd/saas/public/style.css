@@ -1271,11 +1271,11 @@ html {
     var(--togglehandleborder);
 }
 
-.alert-success {
-  border-color: var(--fallback-su,oklch(var(--su)/0.2));
+.alert-warning {
+  border-color: var(--fallback-wa,oklch(var(--wa)/0.2));
   --tw-text-opacity: 1;
-  color: var(--fallback-suc,oklch(var(--suc)/var(--tw-text-opacity)));
-  --alert-bg: var(--fallback-su,oklch(var(--su)/1));
+  color: var(--fallback-wac,oklch(var(--wac)/var(--tw-text-opacity)));
+  --alert-bg: var(--fallback-wa,oklch(var(--wa)/1));
   --alert-bg-mix: var(--fallback-b1,oklch(var(--b1)/1));
 }
 
@@ -2244,8 +2244,16 @@ html {
   position: relative;
 }
 
+.bottom-5 {
+  bottom: 1.25rem;
+}
+
 .left-0 {
   left: 0px;
+}
+
+.left-5 {
+  left: 1.25rem;
 }
 
 .top-0 {
@@ -2533,10 +2541,6 @@ html {
 
 .pl-6 {
   padding-left: 1.5rem;
-}
-
-.text-center {
-  text-align: center;
 }
 
 .text-2xl {

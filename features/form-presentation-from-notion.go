@@ -10,6 +10,7 @@ import (
 )
 
 func FormFullHtmlPageFromNotion(
+	logger ntp.Logger,
 	targetUrl string,
 ) error {
 	fmt.Println("Starting to generate presentation...")
@@ -24,7 +25,7 @@ func FormFullHtmlPageFromNotion(
 	mainPageId := ntp.ExtractPageIdFromUrl(parsedUrl)
 
 	// # Get page blocks
-	responseChunks, err := ntp.GetNotionBlocks(domain, mainPageId)
+	responseChunks, err := ntp.GetNotionBlocks(logger, domain, mainPageId)
 	if err != nil {
 		return err
 	}

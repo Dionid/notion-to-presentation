@@ -9,7 +9,12 @@ templ PresentationPage(presentation *models.Presentation) {
         @templ.JSONScript("presentation-data", presentation)
         <script type="module" src="/public/presentation-config.js"></script>
         <div id="presentation-component" class="w-full h-full flex flex-row-reverse">
-            <div id="presentation-container" class="w-full" v-html="html"></div>
+            <div class="w-full relative">
+                <div id="presentation-container" class="w-full" v-html="html"></div>
+                <a href="n2p.dev" target="_blank" class="absolute left-5 bottom-5 text-xs " style="color: #878787;">
+                    made with n2p.dev
+                </a>
+            </div>
             <div id="presentation-config" class="w-full max-w-sm h-full relative">
                 <label class="btn btn-circle swap swap-rotate absolute" style="right: -60px; top: 10px;">
                     <input type="checkbox" @click="toggleConfigExpanded"/>
@@ -44,6 +49,7 @@ templ PresentationPage(presentation *models.Presentation) {
                                 readonly
                                 v-model="publicLink"/>
                             <button
+                                type="button"
                                 class="btn btn-primary join-item"
                                 @click="copyPublicLink">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">

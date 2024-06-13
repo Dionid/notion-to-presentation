@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -46,9 +45,19 @@ type NotionChunkResponseRecord struct {
 	Block map[string]*NotionChunkResponseRecordBlock `json:"block"`
 }
 
+type NotionChunkResponseCursorStackElement struct {
+	Index int    `json:"index"`
+	Id    string `json:"id"`
+	Table string `json:"table"`
+}
+
+type NotionChunkResponseCursor struct {
+	Stack [][]NotionChunkResponseCursorStackElement `json:"stack"`
+}
+
 type NotionChunkResponse struct {
-	Cursor    map[string]interface{}    `json:"cursor"`
-	RecordMap NotionChunkResponseRecord `json:"recordMap"`
+	Cursor    *NotionChunkResponseCursor `json:"cursor"`
+	RecordMap NotionChunkResponseRecord  `json:"recordMap"`
 }
 
 func ExtractPageIdFromUrl(parsedUrl *url.URL) string {
@@ -59,39 +68,115 @@ func ExtractPageIdFromUrl(parsedUrl *url.URL) string {
 	return mainPageId
 }
 
-func GetNotionBlocks(domain string, mainPageId string) (*NotionChunkResponse, error) {
+type LoadCachedPageChunkRequestBodyPage struct {
+	Id string `json:"id"`
+	// SpaceId string `json:"spaceId"`
+}
+
+type LoadCachedPageChunkRequestBody struct {
+	Page            LoadCachedPageChunkRequestBodyPage `json:"page"`
+	Limit           int                                `json:"limit"`
+	Cursor          NotionChunkResponseCursor          `json:"cursor"`
+	ChunkNumber     int                                `json:"chunkNumber"`
+	VerticalColumns bool                               `json:"verticalColumns"`
+}
+
+func GetNotionBlocksRequest(
+	logger Logger,
+	domain string,
+	mainPageId string,
+	requestBody *LoadCachedPageChunkRequestBody,
+) (*NotionChunkResponse, error) {
+	requestBodyBytes, err := json.Marshal(requestBody)
+	if err != nil {
+		return nil, err
+	}
+
 	res, err := http.Post(
 		fmt.Sprintf("%s/api/v3/loadCachedPageChunk", domain),
 		"application/json",
-		bytes.NewBuffer([]byte(
-			fmt.Sprintf(`{"page":{"id":"%s"},"limit":100,"cursor":{"stack":[]},"chunkNumber":0,"verticalColumns":false}`, mainPageId),
-		)),
+		bytes.NewBuffer(requestBodyBytes),
 	)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Error sending request: %v", err)
 	}
 	defer res.Body.Close()
 
-	if res.StatusCode != 200 {
-		return nil, errors.New(fmt.Sprintf("status code error: %d", res.StatusCode))
-	}
-
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		log.Printf("Error reading body: %v", err)
 		return nil, err
+	}
+
+	if res.StatusCode != 200 {
+		logger.Debug("Error from Notion response, body:", body)
+		return nil, errors.New(fmt.Sprintf("status code error: %d", res.StatusCode))
 	}
 
 	responseChunks := NotionChunkResponse{}
 
 	err = json.Unmarshal(body, &responseChunks)
 	if err != nil {
-		fmt.Println(err.Error())
 		return nil, err
 	}
 
 	return &responseChunks, nil
+}
+
+func GetNotionBlocksRecursive(
+	logger Logger,
+	domain string,
+	mainPageId string,
+	stack [][]NotionChunkResponseCursorStackElement,
+	chunkNumber int,
+) (*NotionChunkResponse, error) {
+	requestBody := LoadCachedPageChunkRequestBody{
+		Page: LoadCachedPageChunkRequestBodyPage{
+			Id: mainPageId,
+		},
+		Limit: 100,
+		Cursor: NotionChunkResponseCursor{
+			Stack: stack,
+		},
+		ChunkNumber:     chunkNumber,
+		VerticalColumns: false,
+	}
+
+	responseChunks, err := GetNotionBlocksRequest(logger, domain, mainPageId, &requestBody)
+	if err != nil {
+		return nil, err
+	}
+
+	if responseChunks.Cursor.Stack != nil && len(responseChunks.Cursor.Stack) > 0 {
+		nestedResponseChunks, err := GetNotionBlocksRecursive(logger, domain, mainPageId, responseChunks.Cursor.Stack, chunkNumber+1)
+		if err != nil {
+			return nil, err
+		}
+
+		for blockId, block := range nestedResponseChunks.RecordMap.Block {
+			responseChunks.RecordMap.Block[blockId] = block
+		}
+	}
+
+	return responseChunks, nil
+}
+
+type Logger interface {
+	Error(msg string, args ...any)
+	Debug(msg string, args ...any)
+}
+
+func GetNotionBlocks(
+	logger Logger,
+	domain string,
+	mainPageId string,
+) (*NotionChunkResponse, error) {
+	responseChunks, err := GetNotionBlocksRecursive(logger, domain, mainPageId, [][]NotionChunkResponseCursorStackElement{}, 0)
+	if err != nil {
+		return nil, err
+	}
+
+	return responseChunks, nil
 }
 
 func ExtractPageTitle(responseChunks *NotionChunkResponse, mainPageId string) (string, error) {
@@ -122,7 +207,7 @@ func FormChunkedBlocks(domain string, responseChunks *NotionChunkResponse, mainP
 	for i, blockId := range mainPageBlock.Value.Content {
 		block := responseChunks.RecordMap.Block[blockId]
 		if block == nil {
-			return nil, errors.New("Block not found")
+			return nil, errors.New("Block not found " + blockId)
 		}
 
 		sortedBlocks[i] = *block
