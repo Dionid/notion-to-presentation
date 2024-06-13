@@ -32,14 +32,14 @@ templ IndexPage() {
 					</style>
 					<div id="main-block" class="relative flex justify-center items-center">
 						<div class="flex flex-col w-2/5 p-5">
-							<h1 class="text-3xl">Create interactive presentations from your Notion pages</h1>
+							<h1 class="text-3xl">Create presentations from your Notion pages</h1>
 							<div class="py-5">
 								<p class="mb-2">
-									Enter the URL of a public Notion page, and click the “Beautify” button. You can also <a href="#" id="try-preview-demo" class=" border-amber-500 border-b-2 border-dashed">try demo</a>.
+									Enter the URL of a public Notion page and click the "Try it out” button. You can also <a href="#" id="try-preview-demo" class=" border-amber-500 border-b-2 border-dashed">try demo</a>.
 								</p>
 							</div>
 							<script>
-								window.addEventListener("load", function () {
+								window.addEventListener("load", function () {		
 									document.querySelector("#try-preview-demo").addEventListener("click", function () {
 										document.querySelector("#url").value = "https://it-kachalka.notion.site/N2P-Demo-presentation-dd7cda6f303d48268857189d3dd11115";
 										document.querySelector("#generate-preview-button").click()
@@ -48,7 +48,7 @@ templ IndexPage() {
 							</script>
 							<form id="generate-preview" hx-get="/preview" hx-target="#presentation-container" hx-swap="innerHTML" hx-indicator="#main-block" class="flex join">
 								<input type="text" placeholder="Paster your notion url" id="url" name="url" class="input input-bordered join-item w-full" required/>
-								<button id="generate-preview-button" type="submit" class="btn btn-primary join-item">Generate</button>
+								<button id="generate-preview-button" type="submit" class="btn btn-primary join-item">Try it out!</button>
 							</form>
 							<div class="py-5 px-2 opacity-60">
 								<p class="mb-2">

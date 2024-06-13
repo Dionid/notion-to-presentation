@@ -31,25 +31,26 @@ DONE
 
 ## Third phase. Testing
 
-1. Add favicon
-1. Add watermark
-1. Invite to login after generation
-1. Reset password
 1. Test with more blocks
 1. HTML
     1. Make content wider
     1. ...
 1. Backups
-1. Add FAQ on how to create presentation
-    1. Divider
-    1. Supported elements
-1. Mobile fixes
 
 ## Fourth phase. Polish
 
 1. Add tech support
 1. Add reveal.js to `/app`
 1. Toast
+1. Push demo presentation to DB and index page
+1. Add FAQ on how to create presentation
+    1. Divider
+    1. Supported elements
+1. Mobile fixes
+1. Add favicon
+1. Add watermark
+1. Invite to login after generation
+1. Reset password
 1. ...
 
 ## Fifth phase. Go live
