@@ -31,26 +31,24 @@ DONE
 
 ## Third phase. Testing
 
+1. Add favicon
 1. Add watermark
-1. Test with more blocks
 1. Invite to login after generation
 1. Reset password
+1. Test with more blocks
 1. HTML
     1. Make content wider
-    1. Inside text
-        1. Links
-        1. Gray text
+    1. ...
 1. Backups
 1. Add FAQ on how to create presentation
     1. Divider
     1. Supported elements
+1. Mobile fixes
 
 ## Fourth phase. Polish
 
 1. Add tech support
-1. Create n2p.dev email
 1. Add reveal.js to `/app`
-1. Make good demo presentation
 1. Toast
 1. ...
 
@@ -78,3 +76,4 @@ DONE
 1. Templ
     1. Hot-reload
 1. Features requested page
+1. Dark theme

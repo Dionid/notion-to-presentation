@@ -23,7 +23,7 @@ func BaseLayout() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html data-theme=\"bumblebee\"><head><title>Notion to presentation</title><link rel=\"stylesheet\" href=\"/public/reveal/reveal.css\"><link rel=\"stylesheet\" href=\"/public/reveal/plugin/highlight/monokai.css\"><link href=\"https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css\" rel=\"stylesheet\" type=\"text/css\"><link rel=\"stylesheet\" href=\"/public/style.css\"><link rel=\"stylesheet\" href=\"/public/custom.css\"></head><body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html data-theme=\"bumblebee\"><head><title>Notion to presentation</title><link rel=\"stylesheet\" href=\"/public/reveal/reveal.css\"><link rel=\"stylesheet\" href=\"/public/reveal/plugin/highlight/monokai.css\"><link rel=\"stylesheet\" href=\"/public/style.css\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link href=\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap\" rel=\"stylesheet\"></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -31,7 +31,7 @@ func BaseLayout() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><script src=\"https://unpkg.com/htmx.org@1.9.12\" integrity=\"sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/vue@3.4.27/dist/vue.global.min.js\"></script><script src=\"/public/reveal/reveal.js\"></script><script src=\"/public/reveal/plugin/notes/notes.js\"></script><script src=\"/public/reveal/plugin/markdown/markdown.js\"></script><script src=\"/public/reveal/plugin/highlight/highlight.js\"></script></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><script src=\"https://unpkg.com/htmx.org@1.9.12\" integrity=\"sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/vue@3.4.27/dist/vue.global.min.js\"></script><script src=\"/public/reveal/reveal.js\"></script><script src=\"/public/reveal/plugin/notes/notes.js\"></script><script src=\"/public/reveal/plugin/markdown/markdown.js\"></script><script src=\"/public/reveal/plugin/highlight/highlight.js\"></script><link rel=\"stylesheet\" href=\"/public/custom.css\"></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

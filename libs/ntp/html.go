@@ -49,7 +49,7 @@ func FormSectionContent(
 		case "video":
 			if block.VideoSource != nil {
 				if strings.Contains(*block.VideoSource, "youtube") {
-					html += fmt.Sprintf(`<iframe class="w-full" style="height: 100vh" src="%s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`, *block.VideoSource)
+					html += fmt.Sprintf(`<iframe class="w-full" style="height: 60vh" src="%s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`, *block.VideoSource)
 					break
 				}
 
@@ -57,7 +57,7 @@ func FormSectionContent(
 			}
 		case "embed":
 			if block.EmbedSource != nil {
-				html += fmt.Sprintf(`<iframe src="%s" class="w-full" style="height: 100vh"></iframe>`, *block.EmbedSource)
+				html += fmt.Sprintf(`<iframe src="%s" class="w-full" style="height: 60vh"></iframe>`, *block.EmbedSource)
 			}
 		case "numbered_list":
 			if !isNumbered {

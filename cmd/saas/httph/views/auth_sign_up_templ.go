@@ -69,7 +69,7 @@ func SignUpPage(err string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div v-if=\"loading\" class=\"absolute top-0 left-0 flex w-full h-full items-center justify-center bg-black bg-opacity-30 text-white text-2xl z-10\"><span class=\"loading loading-spinner loading-lg text-primary\"></span></div></div></div></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div v-if=\"loading\" class=\"absolute top-0 left-0 flex w-full h-full items-center justify-center bg-black bg-opacity-30 text-white text-2xl z-10\"><span class=\"loading loading-spinner loading-lg text-primary\"></span></div></div></div></div><div class=\"hidden text-gray-400\"></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
