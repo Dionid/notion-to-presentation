@@ -6,6 +6,7 @@ const PREVIEW_ROUTE = "/preview"
 const AUTH_ROUTE_PREFIX = "/auth"
 const SIGN_IN_ROUTE = AUTH_ROUTE_PREFIX + "/sign-in"
 const SIGN_UP_ROUTE = AUTH_ROUTE_PREFIX + "/sign-up"
+const RESET_PASSWORD_ROUTE = AUTH_ROUTE_PREFIX + "/reset-password"
 
 const APP_ROUTE = "/app"
 

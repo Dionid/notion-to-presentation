@@ -48,6 +48,8 @@ func InitApi(config Config, app core.App, gctx context.Context) {
 		httphauth.SignInHandlers(e, app, gctx)
 		// ## Sign up
 		httphauth.SignUpHandlers(e, app, gctx)
+		// ## Reset password
+		httphauth.ResetPasswordHandlers(e, app, gctx)
 
 		// # Preview
 		httphpreview.PreviewHandlers(e, app, gctx, config.PreviewId)

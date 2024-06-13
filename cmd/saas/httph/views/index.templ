@@ -56,7 +56,7 @@ templ IndexPage() {
 								</p>
 							</div>
 						</div>
-						<div class="p-5 w-3/5">
+						<div class="p-5 w-3/5 flex-col">
 							<div id="presentation-container" class="rounded-lg overflow-hidden h-80">
 								<div class="reveal">
 									<div class="slides">
@@ -76,6 +76,13 @@ templ IndexPage() {
 										revealPresentation.initialize();
 									})
 								</script>
+							</div>
+							<div id="sign-up-call" class="flex w-full items-center justify-center mt-5">
+								<div>
+								<a href="/auth/sign-up" class="border-amber-500 border-b-2 border-dashed">
+									Sign up 
+								</a> to save your presentations
+								</div>
 							</div>
 							<style type="text/css">
 								.reveal .slides section:first-child {

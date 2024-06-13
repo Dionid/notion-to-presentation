@@ -40,17 +40,12 @@ DONE
 ## Fourth phase. Polish
 
 1. Add tech support
-1. Add reveal.js to `/app`
-1. Toast
-1. Push demo presentation to DB and index page
+1. Add watermark
+1. Reset password
+1. Main page error
 1. Add FAQ on how to create presentation
     1. Divider
     1. Supported elements
-1. Mobile fixes
-1. Add favicon
-1. Add watermark
-1. Invite to login after generation
-1. Reset password
 1. ...
 
 ## Fifth phase. Go live
@@ -59,6 +54,9 @@ DONE
 
 ## X phase
 
+1. Mobile fixes
+1. Push demo presentation to DB and index page
+1. Add reveal.js to `/app`
 1. Make video
 1. Profile
     1. Picture
@@ -78,3 +76,4 @@ DONE
     1. Hot-reload
 1. Features requested page
 1. Dark theme
+1. Toast
