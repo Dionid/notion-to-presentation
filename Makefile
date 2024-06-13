@@ -23,7 +23,8 @@ live-saas:
 # Generate
 
 templ:
-	templ generate
+	cd cmd/saas \
+	&& go generate ./...
 
 # Build
 
@@ -34,6 +35,8 @@ build-cli-mac:
 	GOARCH=amd64 GOOS=darwin go build -o ${BINARY_NAME}-cli-darwin ./cmd/cli
 
 build-saas-mac:
+	npx tailwindcss build -i tailwind.css -o cmd/saas/public/style.css
+	make templ
 	GOARCH=amd64 GOOS=darwin go build -o ./cmd/saas/${BINARY_NAME}-saas-darwin ./cmd/saas
 
 clean-mac:
@@ -44,6 +47,8 @@ build-cli-linux:
 	GOARCH=amd64 GOOS=linux go build -o ${BINARY_NAME}-cli-linux ./cmd/cli
 
 build-saas-linux:
+	npx tailwindcss build -i tailwind.css -o cmd/saas/public/style.css
+	make templ
 	GOARCH=amd64 GOOS=linux go build -o ./cmd/saas/${BINARY_NAME}-saas-linux ./cmd/saas
 
 clean:
