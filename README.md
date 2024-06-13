@@ -32,6 +32,7 @@ DONE
 ## Third phase. Testing
 
 1. First time published got error
+1. Fonts (montserrat) stop page loading
 1. Backups
 
 ## Fourth phase. Polish
