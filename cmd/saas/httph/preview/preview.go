@@ -24,7 +24,7 @@ func PreviewHandlers(e *core.ServeEvent, app core.App, gctx context.Context, pre
 			return apis.NewBadRequestError("Failed to read request data", err)
 		}
 
-		if data.Url == "https://it-kachalka.notion.site/28-May-2024-5c488ae7df5249c2ae0639a20fff32ef" {
+		if data.Url == "https://it-kachalka.notion.site/N2P-Demo-presentation-dd7cda6f303d48268857189d3dd11115" {
 			presentation := &models.Presentation{}
 
 			err := models.PresentationQuery(app.Dao()).
@@ -44,9 +44,31 @@ func PreviewHandlers(e *core.ServeEvent, app core.App, gctx context.Context, pre
 			</style>
 			`
 
+			customizations, err := presentation.Customizations.MarshalJSON()
+			if err != nil {
+				return err
+			}
+
 			html += `
-			<script>
-				(() => {
+			<script type="module">
+				import { formPresentationCss } from "/public/widgets/form-css.js";
+				;(() => {
+					const component = document.querySelector("#presentation-container");
+
+					if (!component) {
+						return;
+					}
+
+					const data = ` + string(customizations) + `;
+
+					const styleBlock = document.createElement("style");
+					styleBlock.innerHTML = formPresentationCss({
+						...data.global,
+						customizedSlides: data.customizedSlides,
+					});
+
+					component.appendChild(styleBlock);
+
 					const revealPresentation = new Reveal({
 						hash: true,
 						plugins: [RevealHighlight],

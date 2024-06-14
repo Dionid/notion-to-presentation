@@ -33,12 +33,10 @@ DONE
 
 1. First time published got error
 1. License
-1. Backups
-1. Save demo presentation in DB
+1. Static cache invalidation
 
 ## Fourth phase. Polish
 
-1. Preview of URL
 1. Add tech support
 1. ...
 
@@ -48,6 +46,10 @@ DONE
 
 ## X phase
 
+1. Presentation notes
+1. Presentation description
+1. Color picker
+1. Google Analytics
 1. Cache-control
 1. Add FAQ on how to create presentation
     1. Divider
