@@ -31,9 +31,8 @@ DONE
 
 ## Third phase. Testing
 
-1. First time published got error
 1. License
-1. Static cache invalidation
+1. Static (js, css) cache invalidation
 
 ## Fourth phase. Polish
 

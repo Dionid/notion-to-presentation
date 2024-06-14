@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/dbx"
@@ -100,7 +101,22 @@ func PreviewHandlers(e *core.ServeEvent, app core.App, gctx context.Context, pre
 
 		chunkedBlocks, err := ntp.FormChunkedBlocks(app.Logger(), domain, responseChunks, mainPageId)
 		if err != nil {
-			return fmt.Errorf("Failed to form chunked blocks: %w", err)
+			// # If main page not found, retry once
+			if _, ok := err.(*ntp.MainPageBlockNotFoundError); ok {
+				time.Sleep(1 * time.Second)
+
+				responseChunks, err := ntp.GetNotionBlocks(app.Logger(), domain, mainPageId)
+				if err != nil {
+					return fmt.Errorf("Failed to get notion blocks twice: %w", err)
+				}
+
+				chunkedBlocks, err = ntp.FormChunkedBlocks(app.Logger(), domain, responseChunks, mainPageId)
+				if err != nil {
+					return fmt.Errorf("Failed to form chunked blocks twice: %w", err)
+				}
+			} else {
+				return fmt.Errorf("Failed to form chunked blocks: %w", err)
+			}
 		}
 
 		// # Form html

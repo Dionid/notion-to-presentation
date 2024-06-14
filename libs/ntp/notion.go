@@ -153,6 +153,10 @@ func GetNotionBlocksRecursive(
 			return nil, err
 		}
 
+		if responseChunks.RecordMap.Block == nil {
+			responseChunks.RecordMap.Block = map[string]*NotionChunkResponseRecordBlock{}
+		}
+
 		for blockId, block := range nestedResponseChunks.RecordMap.Block {
 			responseChunks.RecordMap.Block[blockId] = block
 		}
@@ -194,11 +198,22 @@ func ExtractPageTitle(responseChunks *NotionChunkResponse, mainPageId string) (s
 	return pageTitle, nil
 }
 
+type MainPageBlockNotFoundError struct {
+}
+
+func (e MainPageBlockNotFoundError) Error() string {
+	return "Page block not found"
+}
+
 func FormChunkedBlocks(logger Logger, domain string, responseChunks *NotionChunkResponse, mainPageId string) ([][]ReformedNotionBlock, error) {
 	mainPageBlock := responseChunks.RecordMap.Block[mainPageId]
 
+	if mainPageBlock == nil {
+		return nil, &MainPageBlockNotFoundError{}
+	}
+
 	if mainPageBlock.Value.Id != mainPageId {
-		return nil, errors.New("Page not found")
+		return nil, &MainPageBlockNotFoundError{}
 	}
 
 	// # Sort blocks
