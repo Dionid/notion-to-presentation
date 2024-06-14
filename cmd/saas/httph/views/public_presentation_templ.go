@@ -37,7 +37,7 @@ func PublicPresentationPage(presentation *models.Presentation) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div id=\"public-presentation-component\" class=\"w-full h-full flex flex-row-reverse\"><script type=\"module\" src=\"/public/public-presentation.js\"></script><div id=\"presentation-container\" class=\"w-full\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div id=\"public-presentation-component\" class=\"w-full h-full flex flex-row-reverse\"><script type=\"module\" src=\"/public/widgets/public-presentation.js\"></script><div id=\"presentation-container\" class=\"w-full\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -45,7 +45,7 @@ func PublicPresentationPage(presentation *models.Presentation) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><a href=\"n2p.dev\" target=\"_blank\" class=\"absolute left-5 bottom-5 text-xs \" style=\"color: #878787;\">made with n2p.dev</a><script>\n                window.addEventListener(\"load\", function () {\n                    const revealPresentation = new Reveal({\n                        hash: true,\n                        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],\n                    });\n                \n                    revealPresentation.initialize();\n                })\n            </script><link rel=\"stylesheet\" href=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><a href=\"n2p.dev\" target=\"_blank\" class=\"absolute left-5 bottom-5 text-xs \" style=\"color: #878787;\">made with n2p.dev</a><script>\n                window.addEventListener(\"load\", function () {\n                    const revealPresentation = new Reveal({\n                        hash: true,\n                        plugins: [RevealHighlight, RevealNotes],\n                    });\n                \n                    revealPresentation.initialize();\n                })\n            </script><link rel=\"stylesheet\" href=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

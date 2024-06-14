@@ -222,12 +222,11 @@ func FormFullHtmlPage(
 
 	html += `<script src="dist/reveal.js"></script>
     <script src="plugin/notes/notes.js"></script>
-    <script src="plugin/markdown/markdown.js"></script>
     <script src="plugin/highlight/highlight.js"></script>
     <script>
       Reveal.initialize({
         hash: true,
-        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+        plugins: [RevealHighlight, RevealNotes],
       });
     </script>
 	`

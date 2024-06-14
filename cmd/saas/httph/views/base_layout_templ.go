@@ -31,7 +31,7 @@ func BaseLayout() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><script src=\"https://unpkg.com/htmx.org@1.9.12\" integrity=\"sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/vue@3.4.27/dist/vue.global.min.js\"></script><script src=\"/public/reveal/reveal.js\"></script><script src=\"/public/reveal/plugin/notes/notes.js\"></script><script src=\"/public/reveal/plugin/markdown/markdown.js\"></script><script src=\"/public/reveal/plugin/highlight/highlight.js\"></script><link rel=\"stylesheet\" href=\"/public/custom.css\"></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><script defer src=\"https://unpkg.com/htmx.org@1.9.12\" integrity=\"sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2\" crossorigin=\"anonymous\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/vue@3.4.27/dist/vue.global.min.js\"></script><script defer src=\"/public/reveal/plugin/notes/notes.js\"></script><script defer src=\"/public/reveal/plugin/highlight/highlight.js\"></script><script defer src=\"/public/reveal/reveal.js\"></script><link rel=\"stylesheet\" href=\"/public/custom.css\"></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

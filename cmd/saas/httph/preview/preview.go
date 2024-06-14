@@ -49,7 +49,7 @@ func PreviewHandlers(e *core.ServeEvent, app core.App, gctx context.Context, pre
 				(() => {
 					const revealPresentation = new Reveal({
 						hash: true,
-						plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+						plugins: [RevealHighlight],
 						embedded: true,
 					});
 				
@@ -76,7 +76,7 @@ func PreviewHandlers(e *core.ServeEvent, app core.App, gctx context.Context, pre
 			return fmt.Errorf("Failed to get notion blocks: %w", err)
 		}
 
-		chunkedBlocks, err := ntp.FormChunkedBlocks(domain, responseChunks, mainPageId)
+		chunkedBlocks, err := ntp.FormChunkedBlocks(app.Logger(), domain, responseChunks, mainPageId)
 		if err != nil {
 			return fmt.Errorf("Failed to form chunked blocks: %w", err)
 		}
@@ -86,15 +86,15 @@ func PreviewHandlers(e *core.ServeEvent, app core.App, gctx context.Context, pre
 
 		html += `
 <script>
-	(() => {
+	;(() => {
 		const revealPresentation = new Reveal({
 			hash: true,
-			plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+			plugins: [RevealHighlight],
 			embedded: true,
 		});
 	
 		revealPresentation.initialize();
-	})()
+	})();
 </script>
 `
 

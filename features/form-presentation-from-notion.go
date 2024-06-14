@@ -35,7 +35,7 @@ func FormFullHtmlPageFromNotion(
 		return err
 	}
 
-	chunkedBlocks, err := ntp.FormChunkedBlocks(domain, responseChunks, mainPageId)
+	chunkedBlocks, err := ntp.FormChunkedBlocks(logger, domain, responseChunks, mainPageId)
 	if err != nil {
 		return err
 	}

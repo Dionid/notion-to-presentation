@@ -20,7 +20,7 @@ window.addEventListener("load", function () {
       // # Reveal
       const revealPresentation = new Reveal({
         hash: true,
-        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+        plugins: [RevealHighlight, RevealNotes],
         embedded: true,
       });
       revealPresentation.initialize();
@@ -32,7 +32,7 @@ window.addEventListener("load", function () {
         // # Reveal
         const revealPresentation = new Reveal({
           hash: true,
-          plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+          plugins: [RevealHighlight, RevealNotes],
           embedded: true,
         });
 
@@ -57,9 +57,9 @@ window.addEventListener("load", function () {
         html: data.html,
         theme: data.theme,
         public: data.public,
-        mainFont: global.mainFont || "Arial",
+        mainFont: global.mainFont || "Inter",
         mainFontSize: global.mainFontSize || 30,
-        headingFont: global.headingFont || "Arial",
+        headingFont: global.headingFont || "Inter",
         headingFontWeight: global.headingFontWeight || "400",
         heading1Size: global.heading1Size || 152,
         heading2Size: global.heading2Size || 84,

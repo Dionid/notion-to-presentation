@@ -194,7 +194,7 @@ func ExtractPageTitle(responseChunks *NotionChunkResponse, mainPageId string) (s
 	return pageTitle, nil
 }
 
-func FormChunkedBlocks(domain string, responseChunks *NotionChunkResponse, mainPageId string) ([][]ReformedNotionBlock, error) {
+func FormChunkedBlocks(logger Logger, domain string, responseChunks *NotionChunkResponse, mainPageId string) ([][]ReformedNotionBlock, error) {
 	mainPageBlock := responseChunks.RecordMap.Block[mainPageId]
 
 	if mainPageBlock.Value.Id != mainPageId {
@@ -207,7 +207,10 @@ func FormChunkedBlocks(domain string, responseChunks *NotionChunkResponse, mainP
 	for i, blockId := range mainPageBlock.Value.Content {
 		block := responseChunks.RecordMap.Block[blockId]
 		if block == nil {
-			return nil, errors.New("Block not found " + blockId)
+			// TODO: Think more about it
+			logger.Error("Block not found", blockId)
+			continue
+			// return nil, errors.New("Block not found " + blockId)
 		}
 
 		sortedBlocks[i] = *block

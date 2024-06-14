@@ -47,7 +47,7 @@ func ResyncPresentationHandlers(g *echo.Group, app core.App, gctx context.Contex
 			return err
 		}
 
-		chunkedBlocks, err := ntp.FormChunkedBlocks(domain, responseChunks, mainPageId)
+		chunkedBlocks, err := ntp.FormChunkedBlocks(app.Logger(), domain, responseChunks, mainPageId)
 		if err != nil {
 			return err
 		}

@@ -32,8 +32,9 @@ DONE
 ## Third phase. Testing
 
 1. First time published got error
-1. Fonts (montserrat) stop page loading
+1. License
 1. Backups
+1. Save demo presentation in DB
 
 ## Fourth phase. Polish
 
@@ -47,6 +48,7 @@ DONE
 
 ## X phase
 
+1. Cache-control
 1. Add FAQ on how to create presentation
     1. Divider
     1. Supported elements
