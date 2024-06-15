@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/Dionid/notion-to-presentation/features"
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +36,7 @@ func main() {
 
 			targetUrl := args[len(args)-1]
 
-			err := features.FormFullHtmlPageFromNotion(
+			err := FormFullHtmlPageFromNotion(
 				&Logger{},
 				targetUrl,
 			)

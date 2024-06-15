@@ -66,11 +66,11 @@ setup:
 	go mod tidy
 
 setup-droplet:
-	sudo apt update
-	mkdir -p /root/ntp
 	scp ./infra/pocketbase.service root@${SERVER_IP}:/lib/systemd/system/pocketbase.service
-	ssh root@${SERVER_IP} "systemctl enable pocketbase"
-	ssh root@${SERVER_IP} "systemctl daemon-reload"
+	ssh root@${SERVER_IP} "apt update \
+	&& mkdir -p /root/ntp \
+	&& systemctl enable pocketbase \
+	&& systemctl daemon-reload"
 
 # Deploy
 
