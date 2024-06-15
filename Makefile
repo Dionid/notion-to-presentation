@@ -74,9 +74,7 @@ setup-droplet:
 
 # Deploy
 
-# deploy:
-# 	make build-saas-linux
-# 	scp ./cmd/saas/${BINARY_NAME}-saas-linux root@${SERVER_IP}:/root/${BINARY_NAME}
-# 	ssh root@${SERVER_IP} "systemctl stop ${BINARY_NAME}"
-# 	ssh root@${SERVER_IP} "mv /root/${BINARY_NAME} /usr/local/bin/${BINARY_NAME}"
-# 	ssh root@${SERVER_IP} "systemctl start ${BINARY_NAME}"
+deploy:
+	make build-saas-linux
+	scp ./cmd/saas/${BINARY_NAME}-saas-linux root@${SERVER_IP}:/root/ntp/${BINARY_NAME}-saas-linux
+	ssh root@${SERVER_IP} "systemctl restart pocketbase"

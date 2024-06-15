@@ -73,6 +73,5 @@ DONE
     1. Toast
 1. Tech
     1. Compile JS and CSS
-    1. Google Analytics
     1. CI/CD
     1. Change CDN to npm packages
