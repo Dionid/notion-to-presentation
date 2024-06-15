@@ -1,7 +1,5 @@
-ifneq ("$(wildcard $(.env))","")
-    include .env
-	export $(shell sed 's/=.*//' .env)
-endif
+include .env
+export $(shell sed 's/=.*//' .env)
 
 PROJECT_NAME=ntp
 BINARY_NAME=${PROJECT_NAME}
@@ -71,10 +69,12 @@ setup-droplet:
 	&& mkdir -p /root/ntp \
 	&& systemctl enable pocketbase \
 	&& systemctl daemon-reload"
+	scp ./cmd/saas/app.env.example root@${SERVER_IP}:/root/ntp/app.env
 
 # Deploy
 
 deploy:
 	make build-saas-linux
+	ssh root@${SERVER_IP} "systemctl stop pocketbase"
 	scp ./cmd/saas/${BINARY_NAME}-saas-linux root@${SERVER_IP}:/root/ntp/${BINARY_NAME}-saas-linux
-	ssh root@${SERVER_IP} "systemctl restart pocketbase"
+	ssh root@${SERVER_IP} "systemctl start pocketbase"

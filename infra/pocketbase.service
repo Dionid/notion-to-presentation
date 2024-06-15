@@ -10,6 +10,7 @@ Restart        = always
 RestartSec     = 5s
 StandardOutput = append:/root/ntp/errors.log
 StandardError  = append:/root/ntp/errors.log
+WorkingDirectory  = /root/ntp
 ExecStart      = /root/ntp/ntp-saas-linux serve
 
 [Install]
