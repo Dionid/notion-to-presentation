@@ -71,4 +71,3 @@ setup-droplet:
 	export PATH=$PATH:~/go/bin
 	sudo apt install nodejs
 	sudo apt install npm
-	make setup
