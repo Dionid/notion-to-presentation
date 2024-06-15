@@ -2,8 +2,10 @@ package httph
 
 import (
 	"context"
+	"embed"
 
 	"github.com/labstack/echo/v5"
+	"github.com/labstack/echo/v5/middleware"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 
@@ -19,12 +21,25 @@ type Config struct {
 	PreviewId string
 }
 
+//go:embed public
+var publicAssets embed.FS
+
 func InitApi(config Config, app core.App, gctx context.Context) {
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		// # Static
 		// e.Router.GET("/public/*", apis.StaticDirectoryHandler(os.DirFS("public"), true))
 
-		e.Router.Static("/public", "public")
+		// e.Router.Static("/public", "public")
+
+		e.Router.Use(
+			middleware.StaticWithConfig(
+				middleware.StaticConfig{
+					Root:       "",
+					Browse:     false,
+					Filesystem: publicAssets,
+				},
+			),
+		)
 
 		// # PB Auth
 		e.Router.Use(httphlib.LoadAuthContextFromCookieMiddleware(app))

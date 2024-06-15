@@ -37,7 +37,6 @@ DONE
 
 1. License
 1. Static (js, css) cache invalidation
-1. Add tech support
 1. ...
 
 ## Fifth phase. Go live
