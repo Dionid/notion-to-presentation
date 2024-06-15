@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/tokens"
+	"github.com/pocketbase/pocketbase/tools/security"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/Dionid/notion-to-presentation/cmd/saas/httph/httphlib"
@@ -68,9 +70,15 @@ func SignInHandlers(e *core.ServeEvent, app core.App, gctx context.Context) {
 			return component.Render(gctx, c.Response().Writer)
 		}
 
-		jwt, err := tokens.NewRecordAuthToken(
-			app,
-			user,
+		jwt, err := security.NewJWT(
+			jwt.MapClaims{
+				"id":           user.Id,
+				"type":         tokens.TypeAuthRecord,
+				"collectionId": user.Collection().Id,
+				"email":        user.Email(),
+			},
+			(user.TokenKey() + app.Settings().RecordAuthToken.Secret),
+			app.Settings().RecordAuthToken.Duration,
 		)
 
 		httphlib.SetCookie(c, jwt)
