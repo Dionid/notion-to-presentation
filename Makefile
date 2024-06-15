@@ -71,3 +71,12 @@ setup-droplet:
 	export PATH=$PATH:~/go/bin
 	sudo apt install nodejs
 	sudo apt install npm
+
+# Deploy
+
+# deploy:
+# 	make build-saas-linux
+# 	scp ./cmd/saas/${BINARY_NAME}-saas-linux root@${SERVER_IP}:/root/${BINARY_NAME}
+# 	ssh root@${SERVER_IP} "systemctl stop ${BINARY_NAME}"
+# 	ssh root@${SERVER_IP} "mv /root/${BINARY_NAME} /usr/local/bin/${BINARY_NAME}"
+# 	ssh root@${SERVER_IP} "systemctl start ${BINARY_NAME}"
