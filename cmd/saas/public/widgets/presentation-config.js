@@ -123,6 +123,9 @@ window.addEventListener("load", function () {
       },
     },
     methods: {
+      toggleChatWidget() {
+        Tawk_API.toggleVisibility();
+      },
       copyPublicLink() {
         navigator.clipboard.writeText(this.publicLink);
         alert("Copied to clipboard");

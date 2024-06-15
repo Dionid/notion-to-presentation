@@ -25,7 +25,7 @@ templ SignInPageForm(err string) {
 }
 
 templ SignInPage(err string) {
-    @BaseLayout() {
+    @BaseLayout(true) {
         <div class="h-full mx-auto flex max-w-7xl p-6 flex-col justify-center items-center">
             <div class="flex flex-col w-full max-w-sm">
                 <h1 class="text-2xl font-bold pl-6">Sign in</h1>

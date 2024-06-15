@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-func BaseLayout() templ.Component {
+func BaseLayout(isChatWidgetEnabled bool) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -31,7 +31,17 @@ func BaseLayout() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><script defer src=\"https://unpkg.com/htmx.org@1.9.12\" integrity=\"sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2\" crossorigin=\"anonymous\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/vue@3.4.27/dist/vue.global.min.js\"></script><script defer src=\"/public/reveal/plugin/notes/notes.js\"></script><script defer src=\"/public/reveal/plugin/highlight/highlight.js\"></script><script defer src=\"/public/reveal/reveal.js\"></script><link rel=\"stylesheet\" href=\"/public/custom.css\"></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body><script defer src=\"https://unpkg.com/htmx.org@1.9.12\" integrity=\"sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2\" crossorigin=\"anonymous\"></script><script defer src=\"https://cdn.jsdelivr.net/npm/vue@3.4.27/dist/vue.global.min.js\"></script><script defer src=\"/public/reveal/plugin/notes/notes.js\"></script><script defer src=\"/public/reveal/plugin/highlight/highlight.js\"></script><script defer src=\"/public/reveal/reveal.js\"></script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if isChatWidgetEnabled {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!--Start of Tawk.to Script--> <script defer type=\"text/javascript\">\n\t\t\t\tvar Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\n\t\t\t\t(function(){\n\t\t\t\t\tvar s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\n\t\t\t\t\ts1.async=true;\n\t\t\t\t\ts1.src='https://embed.tawk.to/666d05669a809f19fb3dfe37/1i0ctq6et';\n\t\t\t\t\ts1.charset='UTF-8';\n\t\t\t\t\ts1.setAttribute('crossorigin','*');\n\t\t\t\t\ts0.parentNode.insertBefore(s1,s0);\n\t\t\t\t})();\n\t\t\t</script> <!--End of Tawk.to Script-->")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<link rel=\"stylesheet\" href=\"/public/custom.css\"></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

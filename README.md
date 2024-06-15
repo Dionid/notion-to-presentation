@@ -31,11 +31,12 @@ DONE
 
 ## Third phase. Testing
 
-1. License
-1. Static (js, css) cache invalidation
+DONE
 
 ## Fourth phase. Polish
 
+1. License
+1. Static (js, css) cache invalidation
 1. Add tech support
 1. ...
 

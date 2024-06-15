@@ -5,7 +5,7 @@ import (
 )
 
 templ PublicPresentationPage(presentation *models.Presentation) {
-	@BaseLayout() {
+	@BaseLayout(false) {
         @templ.JSONScript("presentation-data", presentation)
         <div id="public-presentation-component" class="w-full h-full flex flex-row-reverse">
             <script type="module" src="/public/widgets/public-presentation.js"></script>

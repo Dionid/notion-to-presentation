@@ -22,7 +22,7 @@ templ SignUpPageForm(err string) {
 }
 
 templ SignUpPage(err string) {
-    @BaseLayout() {
+    @BaseLayout(true) {
         <script src="/public/widgets/sign-up.js"></script>
         <div class="h-full mx-auto flex max-w-7xl p-6 flex-col justify-center items-center">
             <div class="flex flex-col w-full max-w-sm">
