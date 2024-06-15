@@ -67,10 +67,10 @@ setup:
 
 setup-droplet:
 	sudo apt update
-	sudo apt install golang-go
-	export PATH=$PATH:~/go/bin
-	sudo apt install nodejs
-	sudo apt install npm
+	mkdir -p /root/ntp
+	scp ./infra/pocketbase.service root@${SERVER_IP}:/lib/systemd/system/pocketbase.service
+	ssh root@${SERVER_IP} "systemctl enable pocketbase"
+	ssh root@${SERVER_IP} "systemctl daemon-reload"
 
 # Deploy
 

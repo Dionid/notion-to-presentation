@@ -8,10 +8,9 @@ Group          = root
 LimitNOFILE    = 4096
 Restart        = always
 RestartSec     = 5s
-StandardOutput = append:/root/notion-to-presentation/cmd/saas/errors.log
-StandardError  = append:/root/notion-to-presentation/cmd/saas/errors.log
-WorkingDirectory  = /root/notion-to-presentation/cmd/saas
-ExecStart      = /root/notion-to-presentation/cmd/saas/ntp-saas-linux serve
+StandardOutput = append:/root/ntp/errors.log
+StandardError  = append:/root/ntp/errors.log
+ExecStart      = /root/ntp/ntp-saas-linux serve
 
 [Install]
 WantedBy = multi-user.target
