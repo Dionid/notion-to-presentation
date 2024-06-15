@@ -37,3 +37,6 @@ junit_unit.xml
 kconfig
 
 cmd/saas/pb_data/*
+
+ntp-saas-linux
+ntp-saas-darwin
