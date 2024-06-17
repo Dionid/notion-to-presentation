@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func UrlWithVersion(ctx context.Context, url string) string {
+func PathWithVersion(ctx context.Context, url string) string {
 	if ctxAppVersion, ok := ctx.Value("APP_VERSION").(string); ok && ctxAppVersion != "" {
 		return url + "?v=" + ctxAppVersion
 	}

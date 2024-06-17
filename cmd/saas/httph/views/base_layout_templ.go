@@ -10,6 +10,10 @@ import "context"
 import "io"
 import "bytes"
 
+import (
+	"github.com/Dionid/notion-to-presentation/libs/templu"
+)
+
 func BaseLayout(isChatWidgetEnabled bool) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
@@ -23,7 +27,20 @@ func BaseLayout(isChatWidgetEnabled bool) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html data-theme=\"bumblebee\"><head><title>N2P.dev - Notion to presentation</title><meta name=\"title\" content=\"N2P.dev - Notion to presentation\"><meta name=\"description\" content=\"Create interactive presentations from your Notion pages\"><meta property=\"og:site_name\" content=\"N2P\"><meta property=\"og:title\" content=\"N2P.dev - Notion to presentation\"><meta property=\"og:description\" content=\"Create interactive presentations from your Notion pages\"><meta property=\"og:url\" content=\"n2p.dev\"><meta property=\"og:image\" content=\"https://n2p.dev/public/n2p_link_preview.png\"><meta property=\"og:type\" content=\"website\"><meta name=\"twitter:card\" content=\"summary_large_image\"><meta property=\"twitter:domain\" content=\"n2p.dev\"><meta property=\"twitter:url\" content=\"https://n2p.dev/\"><meta name=\"twitter:title\" content=\"Notion to presentation\"><meta name=\"twitter:description\" content=\"Create interactive presentations from your Notion pages\"><meta name=\"twitter:image\" content=\"https://n2p.dev/public/n2p_link_preview.png\"><link rel=\"stylesheet\" href=\"/public/reveal/reveal.css\"><link rel=\"stylesheet\" href=\"/public/reveal/plugin/highlight/monokai.css\"><link rel=\"stylesheet\" href=\"/public/style.css\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap\" rel=\"stylesheet\"><link rel=\"apple-touch-icon\" sizes=\"57x57\" href=\"/public/apple-icon-57x57.png\"><link rel=\"apple-touch-icon\" sizes=\"60x60\" href=\"/public/apple-icon-60x60.png\"><link rel=\"apple-touch-icon\" sizes=\"72x72\" href=\"/public/apple-icon-72x72.png\"><link rel=\"apple-touch-icon\" sizes=\"76x76\" href=\"/public/apple-icon-76x76.png\"><link rel=\"apple-touch-icon\" sizes=\"114x114\" href=\"/public/apple-icon-114x114.png\"><link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"/public/apple-icon-120x120.png\"><link rel=\"apple-touch-icon\" sizes=\"144x144\" href=\"/public/apple-icon-144x144.png\"><link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"/public/apple-icon-152x152.png\"><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/public/apple-icon-180x180.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/public/android-icon-192x192.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/public/favicon-32x32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"96x96\" href=\"/public/favicon-96x96.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/public/favicon-16x16.png\"><link rel=\"manifest\" href=\"/public/manifest.json\"><meta name=\"msapplication-TileColor\" content=\"#ffffff\"><meta name=\"msapplication-TileImage\" content=\"/public/ms-icon-144x144.png\"><meta name=\"theme-color\" content=\"#ffffff\"></head><body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html data-theme=\"bumblebee\"><head><title>N2P.dev - Notion to presentation</title><meta name=\"title\" content=\"N2P.dev - Notion to presentation\"><meta name=\"description\" content=\"Create interactive presentations from your Notion pages\"><meta property=\"og:site_name\" content=\"N2P\"><meta property=\"og:title\" content=\"N2P.dev - Notion to presentation\"><meta property=\"og:description\" content=\"Create interactive presentations from your Notion pages\"><meta property=\"og:url\" content=\"n2p.dev\"><meta property=\"og:image\" content=\"https://n2p.dev/public/n2p_link_preview.png\"><meta property=\"og:type\" content=\"website\"><meta name=\"twitter:card\" content=\"summary_large_image\"><meta property=\"twitter:domain\" content=\"n2p.dev\"><meta property=\"twitter:url\" content=\"https://n2p.dev/\"><meta name=\"twitter:title\" content=\"Notion to presentation\"><meta name=\"twitter:description\" content=\"Create interactive presentations from your Notion pages\"><meta name=\"twitter:image\" content=\"https://n2p.dev/public/n2p_link_preview.png\"><link rel=\"stylesheet\" href=\"/public/reveal/reveal.css\"><link rel=\"stylesheet\" href=\"/public/reveal/plugin/highlight/monokai.css\"><link rel=\"stylesheet\" href=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var2 string
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(templu.PathWithVersion(ctx, "/public/style.css"))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `base_layout.templ`, Line: 27, Col: 81}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap\" rel=\"stylesheet\"><link rel=\"apple-touch-icon\" sizes=\"57x57\" href=\"/public/apple-icon-57x57.png\"><link rel=\"apple-touch-icon\" sizes=\"60x60\" href=\"/public/apple-icon-60x60.png\"><link rel=\"apple-touch-icon\" sizes=\"72x72\" href=\"/public/apple-icon-72x72.png\"><link rel=\"apple-touch-icon\" sizes=\"76x76\" href=\"/public/apple-icon-76x76.png\"><link rel=\"apple-touch-icon\" sizes=\"114x114\" href=\"/public/apple-icon-114x114.png\"><link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"/public/apple-icon-120x120.png\"><link rel=\"apple-touch-icon\" sizes=\"144x144\" href=\"/public/apple-icon-144x144.png\"><link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"/public/apple-icon-152x152.png\"><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/public/apple-icon-180x180.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/public/android-icon-192x192.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/public/favicon-32x32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"96x96\" href=\"/public/favicon-96x96.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/public/favicon-16x16.png\"><link rel=\"manifest\" href=\"/public/manifest.json\"><meta name=\"msapplication-TileColor\" content=\"#ffffff\"><meta name=\"msapplication-TileImage\" content=\"/public/ms-icon-144x144.png\"><meta name=\"theme-color\" content=\"#ffffff\"></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -36,12 +53,25 @@ func BaseLayout(isChatWidgetEnabled bool) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		if isChatWidgetEnabled {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!--Start of Tawk.to Script--> <script defer type=\"text/javascript\">\n\t\t\t\tfunction parseJwt (token) {\n\t\t\t\t\tvar base64Url = token.split('.')[1];\n\t\t\t\t\tvar base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');\n\t\t\t\t\tvar jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {\n\t\t\t\t\t\treturn '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);\n\t\t\t\t\t}).join(''));\n\n\t\t\t\t\treturn JSON.parse(jsonPayload);\n\t\t\t\t}\n\n\t\t\t\tvar Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\n\n\t\t\t\t(async () => {\n\t\t\t\t\tconst authClaim = await cookieStore.get(\"pb_auth\")\n\t\t\t\t\tif (authClaim) {\n\t\t\t\t\t\tconst authClaimTokenJwt = authClaim.value\n\n\t\t\t\t\t\tconst authData = parseJwt(authClaimTokenJwt)\n\n\t\t\t\t\t\tTawk_API.visitor = {\n\t\t\t\t\t\t\tid: authData.id,\n\t\t\t\t\t\t\temail: authData.email\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t})();\n\n\t\t\t\t(function(){\n\t\t\t\t\tvar s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\n\t\t\t\t\ts1.async=true;\n\t\t\t\t\ts1.src='https://embed.tawk.to/666d05669a809f19fb3dfe37/1i0ctq6et';\n\t\t\t\t\ts1.charset='UTF-8';\n\t\t\t\t\ts1.setAttribute('crossorigin','*');\n\t\t\t\t\ts0.parentNode.insertBefore(s1,s0);\n\t\t\t\t})();\n\t\t\t</script> <!--End of Tawk.to Script-->")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!--Start of Tawk.to Script--> <script defer id=\"tawk-widget\" type=\"text/javascript\">\n\t\t\t\tfunction parseJwt (token) {\n\t\t\t\t\tvar base64Url = token.split('.')[1];\n\t\t\t\t\tvar base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');\n\t\t\t\t\tvar jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {\n\t\t\t\t\t\treturn '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);\n\t\t\t\t\t}).join(''));\n\n\t\t\t\t\treturn JSON.parse(jsonPayload);\n\t\t\t\t}\n\n\t\t\t\tvar Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\n\n\t\t\t\t(async () => {\n\t\t\t\t\tconst authClaim = await cookieStore.get(\"pb_auth\")\n\t\t\t\t\tif (authClaim) {\n\t\t\t\t\t\tconst authClaimTokenJwt = authClaim.value\n\n\t\t\t\t\t\tconst authData = parseJwt(authClaimTokenJwt)\n\n\t\t\t\t\t\tTawk_API.visitor = {\n\t\t\t\t\t\t\tid: authData.id,\n\t\t\t\t\t\t\temail: authData.email\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t})();\n\n\t\t\t\t(function(){\n\t\t\t\t\tvar s1=document.createElement(\"script\"),s0=document.getElementById(\"tawk-widget\");\n\t\t\t\t\ts1.async=true;\n\t\t\t\t\ts1.src='https://embed.tawk.to/666d05669a809f19fb3dfe37/1i0ctq6et';\n\t\t\t\t\ts1.charset='UTF-8';\n\t\t\t\t\ts1.setAttribute('crossorigin','*');\n\t\t\t\t\ts0.parentNode.insertBefore(s1,s0);\n\t\t\t\t})();\n\t\t\t</script> <!--End of Tawk.to Script-->")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Google tag (gtag.js) --><script async src=\"https://www.googletagmanager.com/gtag/js?id=G-KBF7QGT0SP\"></script><script>\n\t\t\twindow.dataLayer = window.dataLayer || [];\n\t\t\tfunction gtag(){dataLayer.push(arguments);}\n\t\t\tgtag('js', new Date());\n\n\t\t\tgtag('config', 'G-KBF7QGT0SP');\n\t\t</script><link rel=\"stylesheet\" href=\"/public/custom.css\"></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Google tag (gtag.js) --><script async src=\"https://www.googletagmanager.com/gtag/js?id=G-KBF7QGT0SP\"></script><script>\n\t\t\twindow.dataLayer = window.dataLayer || [];\n\t\t\tfunction gtag(){dataLayer.push(arguments);}\n\t\t\tgtag('js', new Date());\n\n\t\t\tgtag('config', 'G-KBF7QGT0SP');\n\t\t</script><link rel=\"stylesheet\" href=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(templu.PathWithVersion(ctx, "/public/custom.css"))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `base_layout.templ`, Line: 106, Col: 81}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

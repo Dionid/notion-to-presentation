@@ -43,9 +43,9 @@ func PublicPresentationPage(presentation *models.Presentation) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
-			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(templu.UrlWithVersion(ctx, "/public/widgets/public-presentation.js"))
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(templu.PathWithVersion(ctx, "/public/widgets/public-presentation.js"))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `public_presentation.templ`, Line: 12, Col: 108}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `public_presentation.templ`, Line: 12, Col: 109}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
