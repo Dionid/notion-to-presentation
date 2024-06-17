@@ -15,9 +15,11 @@ import (
 	httphpreview "github.com/Dionid/notion-to-presentation/cmd/saas/httph/preview"
 	httphpublicpresentations "github.com/Dionid/notion-to-presentation/cmd/saas/httph/public-presentations"
 	"github.com/Dionid/notion-to-presentation/cmd/saas/httph/views"
+	"github.com/Dionid/notion-to-presentation/libs/file"
 )
 
 type Config struct {
+	Env       string
 	PreviewId string
 }
 
@@ -30,15 +32,22 @@ func InitApi(config Config, app core.App, gctx context.Context) {
 		e.Router.Use(middleware.BodyLimit(2 * 1024 * 1024))
 
 		// # Static
-		e.Router.Use(
-			middleware.StaticWithConfig(
-				middleware.StaticConfig{
-					Root:       "",
-					Browse:     false,
-					Filesystem: publicAssets,
-				},
-			),
-		)
+		if config.Env == "PRODUCTION" {
+			file.CopyFromEmbed(publicAssets, "public", "./public")
+			e.Router.Static("/public", "./public")
+		} else {
+			e.Router.Static("/public", "./httph/public")
+		}
+
+		// e.Router.Use(
+		// 	middleware.StaticWithConfig(
+		// 		middleware.StaticConfig{
+		// 			Root:       "",
+		// 			Browse:     false,
+		// 			Filesystem: publicAssets,
+		// 		},
+		// 	),
+		// )
 
 		// # PB Auth
 		e.Router.Use(httphlib.LoadAuthContextFromCookieMiddleware(app))
