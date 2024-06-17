@@ -21,7 +21,7 @@ func ResetPasswordHandlers(e *core.ServeEvent, app core.App, gctx context.Contex
 
 		component := views.ResetPassword("")
 
-		return component.Render(gctx, c.Response().Writer)
+		return component.Render(c.Request().Context(), c.Response().Writer)
 	}, apis.ActivityLogger(app), apis.RequireGuestOnly())
 
 	return

@@ -21,7 +21,7 @@ func SignUpHandlers(e *core.ServeEvent, app core.App, gctx context.Context) {
 
 		component := views.SignUpPage("")
 
-		return component.Render(gctx, c.Response().Writer)
+		return component.Render(c.Request().Context(), c.Response().Writer)
 	}, apis.ActivityLogger(app), apis.RequireGuestOnly())
 
 	return

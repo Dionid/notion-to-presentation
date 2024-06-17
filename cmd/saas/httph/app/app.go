@@ -50,7 +50,7 @@ func AppHandlers(e *core.ServeEvent, app core.App, gctx context.Context) {
 
 		component := views.AppIndexPage(presentations)
 
-		return component.Render(gctx, c.Response().Writer)
+		return component.Render(c.Request().Context(), c.Response().Writer)
 	})
 
 	g.GET(httphlib.APP_PRESENTATION_ROUTE, func(c echo.Context) error {
@@ -74,7 +74,7 @@ func AppHandlers(e *core.ServeEvent, app core.App, gctx context.Context) {
 
 		component := views.PresentationPage(&presentation)
 
-		return component.Render(gctx, c.Response().Writer)
+		return component.Render(c.Request().Context(), c.Response().Writer)
 	})
 
 	ResyncPresentationHandlers(g, app, gctx)

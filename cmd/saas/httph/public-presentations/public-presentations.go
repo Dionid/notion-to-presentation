@@ -30,6 +30,6 @@ func PublicPresentationsHandlers(e *core.ServeEvent, app core.App, gctx context.
 
 		component := views.PublicPresentationPage(&presentation)
 
-		return component.Render(gctx, c.Response().Writer)
+		return component.Render(c.Request().Context(), c.Response().Writer)
 	})
 }

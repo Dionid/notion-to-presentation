@@ -27,7 +27,7 @@ func SignInHandlers(e *core.ServeEvent, app core.App, gctx context.Context) {
 
 		component := views.SignInPage("")
 
-		return component.Render(gctx, c.Response().Writer)
+		return component.Render(c.Request().Context(), c.Response().Writer)
 	}, apis.ActivityLogger(app), apis.RequireGuestOnly())
 
 	e.Router.POST(httphlib.SIGN_IN_ROUTE, func(c echo.Context) error {
@@ -48,7 +48,7 @@ func SignInHandlers(e *core.ServeEvent, app core.App, gctx context.Context) {
 		if data.Email == "" || data.Password == "" {
 			component := views.SignInPageForm("Email and Password are required")
 
-			return component.Render(gctx, c.Response().Writer)
+			return component.Render(c.Request().Context(), c.Response().Writer)
 		}
 
 		user, err := app.Dao().FindAuthRecordByEmail("users", data.Email)
@@ -58,7 +58,7 @@ func SignInHandlers(e *core.ServeEvent, app core.App, gctx context.Context) {
 
 			component := views.SignInPageForm("No user")
 
-			return component.Render(gctx, c.Response().Writer)
+			return component.Render(c.Request().Context(), c.Response().Writer)
 		}
 
 		app.Logger().Debug(fmt.Sprintf("User: %+v", user))
@@ -67,7 +67,7 @@ func SignInHandlers(e *core.ServeEvent, app core.App, gctx context.Context) {
 		if err != nil {
 			component := views.SignInPageForm("Invalid email or password")
 
-			return component.Render(gctx, c.Response().Writer)
+			return component.Render(c.Request().Context(), c.Response().Writer)
 		}
 
 		jwt, err := security.NewJWT(

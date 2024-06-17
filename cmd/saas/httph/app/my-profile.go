@@ -34,6 +34,6 @@ func MyProfileHandlers(pg *echo.Group, app core.App, gctx context.Context) {
 
 		component := views.MyProfilePage(&user)
 
-		return component.Render(gctx, c.Response().Writer)
+		return component.Render(c.Request().Context(), c.Response().Writer)
 	})
 }

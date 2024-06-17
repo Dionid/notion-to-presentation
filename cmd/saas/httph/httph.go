@@ -54,7 +54,7 @@ func InitApi(config Config, app core.App, gctx context.Context) {
 
 			component := views.IndexPage()
 
-			return component.Render(gctx, c.Response().Writer)
+			return component.Render(c.Request().Context(), c.Response().Writer)
 		})
 
 		// # Auth
