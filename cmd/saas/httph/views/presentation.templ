@@ -2,6 +2,7 @@ package views
 
 import (
     "github.com/Dionid/notion-to-presentation/libs/ntp/models"
+    "github.com/Dionid/notion-to-presentation/libs/templu"
 )
 
 templ PresentationPage(presentation *models.Presentation) {
@@ -33,7 +34,7 @@ templ PresentationPage(presentation *models.Presentation) {
                 }
             })
         </script>
-        <script type="module" src="/public/widgets/presentation-config.js"></script>
+        <script type="module" src={ templu.UrlWithVersion(ctx, "/public/widgets/presentation-config.js") }></script>
         <div id="presentation-component" class="w-full h-full flex flex-row-reverse">
             <div class="w-full relative">
                 <div id="presentation-container" class="w-full" v-html="html"></div>

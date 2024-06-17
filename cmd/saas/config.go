@@ -1,14 +1,16 @@
 package main
 
 import (
+	"os"
 	"strings"
 
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Env  string `mapstructure:"ENV"`
-	Port int    `mapstructure:"PORT"`
+	Env        string `mapstructure:"ENV"`
+	Port       int    `mapstructure:"PORT"`
+	AppVersion string `mapstructure:"APP_VERSION"`
 
 	PreviewId string `mapstructure:"PREVIEW_ID"`
 }
@@ -42,6 +44,10 @@ func initConfig() (*Config, error) {
 	if err := viper.Unmarshal(config); err != nil {
 		return nil, err
 	}
+
+	// TODO: Change somehow
+	// # Load into env
+	os.Setenv("APP_VERSION", config.AppVersion)
 
 	return config, nil
 }

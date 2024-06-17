@@ -2,13 +2,14 @@ package views
 
 import (
     "github.com/Dionid/notion-to-presentation/libs/ntp/models"
+    "github.com/Dionid/notion-to-presentation/libs/templu"
 )
 
 templ PublicPresentationPage(presentation *models.Presentation) {
 	@BaseLayout(false) {
         @templ.JSONScript("presentation-data", presentation)
         <div id="public-presentation-component" class="w-full h-full flex flex-row-reverse">
-            <script type="module" src="/public/widgets/public-presentation.js"></script>
+            <script type="module" src={ templu.UrlWithVersion(ctx, "/public/widgets/public-presentation.js") }></script>
             <div id="presentation-container" class="w-full">
                 @templ.Raw(presentation.Html)
             </div>

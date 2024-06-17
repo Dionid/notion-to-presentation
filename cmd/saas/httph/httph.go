@@ -26,10 +26,10 @@ var publicAssets embed.FS
 
 func InitApi(config Config, app core.App, gctx context.Context) {
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
-		// # Static
-		// e.Router.Static("/public", "public")
-
+		// # Body limit
 		e.Router.Use(middleware.BodyLimit(2 * 1024 * 1024))
+
+		// # Static
 		e.Router.Use(
 			middleware.StaticWithConfig(
 				middleware.StaticConfig{

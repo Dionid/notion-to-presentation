@@ -10,6 +10,10 @@ import "context"
 import "io"
 import "bytes"
 
+import (
+	"github.com/Dionid/notion-to-presentation/libs/templu"
+)
+
 func ResetPasswordForm(err string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
@@ -69,7 +73,20 @@ func ResetPassword(err string) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script src=\"/public/widgets/reset-password.js\"></script> <div class=\"h-full mx-auto flex max-w-7xl p-6 flex-col justify-center items-center\"><div class=\"flex flex-col w-full max-w-sm\"><h1 class=\"text-2xl font-bold pl-6\">Reset password</h1><div id=\"reset-password-form-component\" class=\"overflow-hidden card card-bordered w-96 bg-base-100 shadow-xl mt-5\"><div class=\"card-body\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script src=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var4 string
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(templu.UrlWithVersion(ctx, "/public/widgets/reset-password.js"))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `reset_password.templ`, Line: 32, Col: 85}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></script> <div class=\"h-full mx-auto flex max-w-7xl p-6 flex-col justify-center items-center\"><div class=\"flex flex-col w-full max-w-sm\"><h1 class=\"text-2xl font-bold pl-6\">Reset password</h1><div id=\"reset-password-form-component\" class=\"overflow-hidden card card-bordered w-96 bg-base-100 shadow-xl mt-5\"><div class=\"card-body\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
