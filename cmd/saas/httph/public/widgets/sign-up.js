@@ -49,23 +49,7 @@ window.addEventListener("load", function () {
           return;
         }
 
-        const requestVerification = await fetch(
-          "/api/collections/users/request-verification",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: this.email }),
-          }
-        );
-
-        if (requestVerification.ok) {
-          window.location.href = "/auth/sign-in";
-        } else {
-          const requestVerificationJson = await requestVerification.json();
-          this.error = requestVerificationJson.message;
-        }
+        window.location.href = "/auth/sign-in";
       },
     },
   }).mount("#sign-up-form-component");
