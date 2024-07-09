@@ -3,6 +3,8 @@ package httph
 import (
 	"context"
 	"embed"
+	"log"
+	"os"
 
 	"github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
@@ -33,21 +35,14 @@ func InitApi(config Config, app core.App, gctx context.Context) {
 
 		// # Static
 		if config.Env == "PRODUCTION" {
+			os.RemoveAll("./public")
 			file.CopyFromEmbed(publicAssets, "public", "./public")
 			e.Router.Static("/public", "./public")
-		} else {
+		} else if config.Env == "LOCAL" {
 			e.Router.Static("/public", "./httph/public")
+		} else {
+			log.Fatalf("Unknown env: %s", config.Env)
 		}
-
-		// e.Router.Use(
-		// 	middleware.StaticWithConfig(
-		// 		middleware.StaticConfig{
-		// 			Root:       "",
-		// 			Browse:     false,
-		// 			Filesystem: publicAssets,
-		// 		},
-		// 	),
-		// )
 
 		// # PB Auth
 		e.Router.Use(httphlib.LoadAuthContextFromCookieMiddleware(app))

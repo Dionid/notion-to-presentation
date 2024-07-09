@@ -41,6 +41,7 @@ func main() {
 	// # HTTP API
 	httph.InitApi(httph.Config{
 		PreviewId: config.PreviewId,
+		Env:       config.Env,
 	}, app, gctx)
 
 	// # Send verification email on sign-up
